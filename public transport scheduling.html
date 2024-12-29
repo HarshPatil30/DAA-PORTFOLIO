@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Transport Scheduling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.9;
+            color: #0e0e0e;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 1.6rem;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 1rem 0;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInHeader 1s forwards 0.5s;
+        }
+
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        @keyframes fadeInHeader {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            font-size: 18px;
+        }
+
+        section {
+            background: #f4f4f9;
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            font-size: 2.1rem;
+            color: #ee0dc1;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #a8dadc;
+            padding-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+        }
+
+        section h3 {
+            font-size: 1.8rem;
+            color: #682ae9;
+            margin-bottom: 0.8rem;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+        }
+
+        section h4 {
+            font-size: 1.4rem;
+            color: #241341;
+            margin-bottom: 0.6rem;
+        }
+
+        section h2.visible,
+        section h3.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        section p {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+        }
+
+        section p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .implementation-btn {
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #79767e;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .implementation-btn:hover {
+            background-color: #a40cd2;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #e1cccc;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            font-size: 1.1rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+
+            main {
+                padding: 1.5rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Public Transport Scheduling</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="hidden">Introduction</h2>
+            <p class="hidden">Efficient public transport scheduling is key to enhancing mobility, reducing waiting times, and improving urban transit systems. Advanced algorithms and real-time data can transform the way public transport operates.</p>
+        </section>
+
+        <section>
+            <h2 class="hidden">Key Implementations</h2>
+
+            <h3 class="hidden">Dynamic Scheduling with Real-Time Data</h3>
+            <p class="hidden">Use dynamic programming to adjust bus and train schedules based on real-time demand and traffic conditions. This minimizes delays and ensures optimal resource utilization.</p>
+            <button class="implementation-btn" onclick="alert('Dynamic Scheduling Implementation in Python coming soon!')">View Implementation</button>
+
+            <h3 class="hidden">Route Optimization</h3>
+            <p class="hidden">Leverage Dijkstra's algorithm to find the shortest and most efficient routes for public transport vehicles, reducing travel time and fuel consumption.</p>
+            <button class="implementation-btn" onclick="alert('Route Optimization Implementation in Python coming soon!')">View Implementation</button>
+
+            <h3 class="hidden">Demand Forecasting</h3>
+            <p class="hidden">Use machine learning models to predict passenger demand based on historical data and trends. Accurate forecasts allow better allocation of vehicles and resources.</p>
+            <button class="implementation-btn" onclick="alert('Demand Forecasting Implementation in Python coming soon!')">View Implementation</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Public Transport Scheduling | Designed with care</p>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const elements = document.querySelectorAll('.hidden');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 400);
+            });
+        });
+    </script>
+</body>
+
+</html>
