@@ -35,7 +35,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(50px); /* Starting position below the viewport */
             animation: fadeInHeader 1s forwards 0.5s;
         }
 
@@ -46,6 +46,7 @@
             letter-spacing: 1.5px;
         }
 
+        /* Animation to make the header appear from below */
         @keyframes fadeInHeader {
             0% {
                 opacity: 0;
@@ -57,6 +58,7 @@
             }
         }
 
+        /* Main content and sections */
         main {
             background: #ffffff;
             padding: 3rem;
@@ -81,7 +83,7 @@
             border-bottom: 2px solid #a8dadc;
             padding-bottom: 0.5rem;
             opacity: 0;
-            transform: translateX(-100%);
+            transform: translateX(-100%); /* From left */
             transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
         }
 
@@ -90,14 +92,8 @@
             color: #682ae9;
             margin-bottom: 0.8rem;
             opacity: 0;
-            transform: translateX(100%);
+            transform: translateX(100%); /* From right */
             transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
-        }
-
-        section h4 {
-            font-size: 1.4rem;
-            color: #241341;
-            margin-bottom: 0.6rem;
         }
 
         section h2.visible,
@@ -118,6 +114,7 @@
             transform: translateY(0);
         }
 
+        /* Buttons */
         .implementation-btn {
             display: inline-block;
             font-family: 'Poppins', sans-serif;
@@ -154,6 +151,7 @@
             text-align: center;
         }
 
+        /* Responsive design */
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
@@ -179,23 +177,27 @@
     <main>
         <section>
             <h2 class="hidden">Introduction</h2>
-            <p class="hidden">Efficient public transport scheduling is key to enhancing mobility, reducing waiting times, and improving urban transit systems. Advanced algorithms and real-time data can transform the way public transport operates.</p>
+            <p class="hidden">Efficient public transport scheduling improves urban mobility, reduces wait times, and optimizes resource allocation. Leveraging advanced algorithms and real-time data can revolutionize the way cities manage public transportation.</p>
         </section>
 
         <section>
-            <h2 class="hidden">Key Implementations</h2>
+            <h2 class="hidden">Solutions/Plans</h2>
 
-            <h3 class="hidden">Dynamic Scheduling with Real-Time Data</h3>
-            <p class="hidden">Use dynamic programming to adjust bus and train schedules based on real-time demand and traffic conditions. This minimizes delays and ensures optimal resource utilization.</p>
-            <button class="implementation-btn" onclick="alert('Dynamic Scheduling Implementation in Python coming soon!')">View Implementation</button>
+            <h3 class="hidden">Dynamic Scheduling</h3>
+            <p class="hidden">Use real-time passenger demand data to adjust schedules dynamically. Implement machine learning models to predict peak travel times and optimize vehicle allocation.</p>
+            <button class="implementation-btn" onclick="alert('Dynamic Scheduling Algorithm Implementation in Python coming soon!')">View Implementation</button>
 
-            <h3 class="hidden">Route Optimization</h3>
-            <p class="hidden">Leverage Dijkstra's algorithm to find the shortest and most efficient routes for public transport vehicles, reducing travel time and fuel consumption.</p>
-            <button class="implementation-btn" onclick="alert('Route Optimization Implementation in Python coming soon!')">View Implementation</button>
+            <h3 class="hidden">Route Optimization with Graph Algorithms</h3>
+            <p class="hidden">Utilize Dijkstra’s or A* algorithms to find the shortest and most efficient routes for buses and trains, minimizing travel times and improving service reliability.</p>
+            <button class="implementation-btn" onclick="alert('Route Optimization Algorithm Implementation in C++ coming soon!')">View Implementation</button>
 
             <h3 class="hidden">Demand Forecasting</h3>
-            <p class="hidden">Use machine learning models to predict passenger demand based on historical data and trends. Accurate forecasts allow better allocation of vehicles and resources.</p>
-            <button class="implementation-btn" onclick="alert('Demand Forecasting Implementation in Python coming soon!')">View Implementation</button>
+            <p class="hidden">Apply time-series analysis to predict passenger demand across different times and locations. Cluster similar demand areas using k-means for better planning.</p>
+            <button class="implementation-btn" onclick="alert('Demand Forecasting Model Implementation coming soon!')">View Implementation</button>
+
+            <h3 class="hidden">Traffic-Aware Scheduling</h3>
+            <p class="hidden">Incorporate real-time traffic data into the scheduling algorithm to avoid delays and reroute vehicles efficiently during congestion or roadblocks.</p>
+            <button class="implementation-btn" onclick="alert('Traffic-Aware Scheduling Implementation in Python coming soon!')">View Implementation</button>
         </section>
     </main>
 
@@ -209,7 +211,7 @@
             elements.forEach((el, index) => {
                 setTimeout(() => {
                     el.classList.add('visible');
-                }, index * 400);
+                }, index * 400); // Stagger the reveals by 400ms
             });
         });
     </script>
