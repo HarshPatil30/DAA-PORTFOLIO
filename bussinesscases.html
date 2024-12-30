@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Cases - Smart City Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-start: #0f172a;
+            --gradient-end: #1e1b4b;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.4s var(--transition-bounce);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            animation: borderFlow 2s infinite;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            animation: fadeInUp 1s var(--transition-smooth);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .case-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .case-section:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            animation: 
+                glowPulse 2s infinite,
+                floatCard 4s infinite var(--transition-smooth);
+        }
+
+        .case-section h2 {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .case-section li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: all 0.3s var(--transition-bounce);
+        }
+
+        .case-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            transition: all 0.3s var(--transition-bounce);
+        }
+
+        .case-section li:hover {
+            transform: translateX(10px);
+            color: var(--light);
+        }
+
+        .case-section li:hover::before {
+            transform: translateX(5px);
+            color: var(--secondary);
+        }
+
+        .case-section a {
+            color: var(--light);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .case-section a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s var(--transition-smooth);
+        }
+
+        .case-section a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.2); }
+        }
+
+        @keyframes borderFlow {
+            0% { border-color: var(--primary); }
+            50% { border-color: var(--secondary); }
+            100% { border-color: var(--primary); }
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .case-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Srijanaviharam
+            </div>
+            <div class="nav-links">
+                <a href="index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Home
+                </a>
+                <a href="https://github.com/HarshPatil30/DAA-PORTFOLIO" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    Github
+                </a>
+                <a href="projectoverview.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Overview
+                </a>
+                <a href="#contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Outcome
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Business Cases Identified</h1>
+    </header>
+
+    <main>
+        <div class="case-section">
+            <h2>Harsh</h2>
+            <ul>
+                <li><a href="traffic.html">Traffic Management</a></li>
+                <li><a href="harsh/automation.html">Identified opportunities for automation in project workflows</a></li>
+                <li><a href="harsh/collaboration.html">Improved team collaboration through streamlined tools</a></li>
+            </ul>
+        </div>
+
+        <div class="case-section">
+            <h2>Sanjana</h2>
+            <ul>
+                <li><a href="public transport scheduling.html">Public Transport Scheduling</a></li>
+                <li><a href="prajwal/market_trends.html">Researched market trends for better decision-making</a></li>
+                <li><a href="prajwal/pilot_testing.html">Implemented pilot testing to validate assumptions</a></li>
+            </ul>
+        </div>
+
+        <div class="case-section">
+            <h2>Anam</h2>
+            <ul>
+                <li><a href="mallikarjun/scalable_models.html">Proposed scalable business models for growth</a></li>
+                <li><a href="mallikarjun/sustainability.html">Focused on sustainability and resource management</a></li>
+                <li><a href="mallikarjun/risk_assessment.html">Assessed risks and devised mitigation plans</a></li>
+            </ul>
+        </div>
+
+        <div class="case-section">
+            <h2>Udita</h2>
+            <ul>
+                <li><a href="subramannya/data_visualization.html">Enhanced data visualization techniques for reports</a></li>
+                <li><a href="subramannya/process_optimization.html">Optimized processes for improved efficiency</a></li>
+                <li><a href="subramannya/stakeholder_engagement.html">Engaged stakeholders for successful project execution</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Team Project | All Rights Reserved</p>
+    </footer>
+</body>
+</html>

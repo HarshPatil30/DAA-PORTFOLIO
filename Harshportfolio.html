@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Patil - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Enhanced Header */
+        .header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 50% 50%, 
+                    rgba(56, 189, 248, 0.1) 0%, 
+                    transparent 50%);
+            opacity: 0;
+            animation: pulseGradient 8s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(
+                var(--gradient-angle),
+                var(--highlight),
+                var(--text-primary)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--accent);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease forwards 0.5s;
+        }
+
+        /* Enhanced Sections */
+        .section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--highlight),
+                transparent
+            );
+            transform: scaleX(0);
+            transform-origin: center;
+            animation: expandLine 0.6s ease forwards 0.5s;
+        }
+
+        /* Enhanced Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            perspective: 1000px;
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(
+                var(--gradient-angle),
+                transparent 20%,
+                var(--highlight),
+                transparent 80%
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            animation: rotateGradient 3s linear infinite;
+        }
+
+        /* Enhanced Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .skill-item {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(56, 189, 248, 0.1),
+                transparent
+            );
+            transition: transform 0.6s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--card-shadow);
+        }
+
+        .skill-item:hover::before {
+            transform: translate(50%, 50%);
+        }
+
+        /* Enhanced Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .details-grid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                var(--gradient-angle),
+                transparent,
+                rgba(56, 189, 248, 0.05),
+                transparent
+            );
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .details-column dt {
+            color: var(--highlight);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .details-column dd {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            transform: translateX(20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .details-grid.visible dt,
+        .details-grid.visible dd {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Enhanced Quote */
+        .quote {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 4rem auto;
+            text-align: center;
+            position: relative;
+            padding: 3rem;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .quote.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .quote::before,
+        .quote::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--highlight);
+            opacity: 0.2;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .quote:hover::before,
+        .quote:hover::after {
+            color: var(--highlight);
+            opacity: 0.4;
+        }
+
+        .quote::before {
+            top: -1rem;
+            left: 0;
+        }
+
+        .quote::after {
+            bottom: -2rem;
+            right: 0;
+        }
+
+        /* Advanced Animations */
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expandLine {
+            to { transform: scaleX(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .section { padding: 4rem 0; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .quote { 
+                font-size: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="title">Harsh Patil</h1>
+                <p class="subtitle">Passionate about understanding how things work and creating meaningful solutions that make a difference.</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Artisan Support Initiative</h3>
+                        <p>Worked with roadside artists and sculptors to increase their sales and facilitate NGO connections.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Bubble Blowing Machine</h3>
+                        <p>Engineered and developed an automated bubble blowing machine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">C</div>
+                    <div class="skill-item">C++</div>
+                    <div class="skill-item">Data Structures</div>
+                    <div class="skill-item">Algorithms</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Academic Details</h2>
+                <div class="details-grid">
+                    <div class="details-column">
+                        <dt>Course</dt>
+                        <dd>Design and Analysis of Algorithms</dd>
+                        <dt>Course Code</dt>
+                        <dd>24ECSP206</dd>
+                        <dt>Name</dt>
+                        <dd>Harsh Patil</dd>
+                    </div>
+                    <div class="details-column">
+                        <dt>SRN</dt>
+                        <dd>01fe23bcs013</dd>
+                        <dt>Instructor</dt>
+                        <dd>Vijaylaxmi</dd>
+                        <dt>University</dt>
+                        <dd>KLE Technological University</dd>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "The best way to predict the future is to create it."
+                    <footer>- Peter Drucker</footer>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Enhanced Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Add staggered animation for details
+                    if (entry.target.classList.contains('details-grid')) {
+                        const dts = entry.target.querySelectorAll('dt');
+                        const dds = entry.target.querySelectorAll('dd');
+                        
+                        dts.forEach((dt, index) => {
+                            setTimeout(() => {
+                                dt.style.transform = 'translateX(0)';
+                                dt.style.opacity = '1';
+                            }, index * 100);
+                        });
+                        
+                        dds.forEach((dd, index) => {
+                            setTimeout(() => {
+                                dd.style.transform = 'translateX(0)';
+                                dd.style.opacity = '1';
+                            }, (index * 100) + 50);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and the quote
+        document.querySelectorAll('.section, .details-grid, .quote').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Add parallax effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `
+                    translateY(-10px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                `;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

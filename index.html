@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAA Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #f472b6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-start: #0f172a;
+            --gradient-end: #1e1b4b;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-link:hover {
+            color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::before {
+            opacity: 0.15;
+        }
+
+        .hero {
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at center, 
+                rgba(59, 130, 246, 0.1) 0%,
+                rgba(139, 92, 246, 0.1) 25%,
+                rgba(244, 114, 182, 0.1) 50%,
+                transparent 75%);
+            transform: translate(-50%, -50%) rotate(-45deg);
+            animation: pulse 10s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.2); }
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleReveal 1.5s ease-out;
+            letter-spacing: -2px;
+            line-height: 1.2;
+        }
+
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+                filter: blur(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right,
+                rgba(59, 130, 246, 0.15),
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section:hover::before {
+            opacity: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .content-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="nav-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+                DAA Portfolio
+            </a>
+            <div class="nav-links">
+                <a href="https://github.com/HarshPatil30/DAA-PORTFOLIO" target="_blank" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    Github
+                </a>
+                <a href="projectoverview.html" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    Project Overview
+                </a>
+                <a href="bussinesscases.html" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    Business Cases
+                </a>
+                <a href="#contact" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Course Outcome
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="hero-title">Design and Analysis of Algorithms</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="content-section">
+            <h2 class="section-title">Introduction</h2>
+            <p>This course focuses on the design and analysis of algorithms and their real-world applications. The objective is to develop the capability to write algorithms for specific tasks, implement them using suitable data structures, and improve their efficiency. This course bridges theoretical knowledge and practical applications, making it crucial for solving computational problems.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Topics Covered</h2>
+            <div class="topics-grid">
+                <div class="topic-group">
+                    <h3>Data Structures</h3>
+                    <h4>Non-linear Structures:</h4>
+                    <ul class="feature-list">
+                        <li>n-ary Trees</li>
+                        <li>Binary Trees</li>
+                        <li>Binary Search Trees</li>
+                        <li>2-3 Trees</li>
+                        <li>AVL Trees</li>
+                        <li>Red-Black Trees</li>
+                        <li>Tries</li>
+                        <li>Skip Lists</li>
+                        <li>Segment Trees</li>
+                        <li>Fenwick Trees</li>
+                        <li>Graphs (Weighted/Unweighted, Directed/Undirected)</li>
+                        <li>Heaps</li>
+                        <li>HashMaps</li>
+                        <li>Union-Find (Disjoint Set Union)</li>
+                    </ul>
+                    <h4>String Matching Algorithms:</h4>
+                    <ul class="feature-list">
+                        <li>Brute Force</li>
+                        <li>Boyer-Moore</li>
+                        <li>Knuth-Morris-Pratt (KMP)</li>
+                        <li>Rabin-Karp</li>
+                    </ul>
+                    <h4>Graph Algorithms:</h4>
+                    <ul class="feature-list">
+                        <li>Breadth-First Search (BFS)</li>
+                        <li>Depth-First Search (DFS)</li>
+                        <li>Kruskal’s Algorithm</li>
+                        <li>Dijkstra’s Algorithm</li>
+                        <li>Bellman-Ford Algorithm</li>
+                        <li>Floyd-Warshall Algorithm</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Real-Time Applications</h2>
+            <p>The DAA course bridges the gap between theoretical knowledge and practical applications, enabling students to solve real-world computational problems efficiently.</p>
+            <ul class="feature-list">
+                <li>Optimized Solutions for Real-World Problems</li>
+                <li>Performance Analysis</li>
+                <li>Applications in Software Development</li>
+                <li>Real-Time Systems</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
