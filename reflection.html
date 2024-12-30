@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Learning Reflections</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1), transparent);
+            opacity: 0;
+            animation: pulseGradient 8s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(var(--gradient-angle), var(--highlight), var(--text-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--accent);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease forwards 0.5s;
+        }
+
+        .section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            color: var(--highlight);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+            transform: scaleX(0);
+            transform-origin: center;
+            animation: expandLine 0.6s ease forwards 0.5s;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .reflection {
+            margin-top: 4rem;
+            padding: 2rem;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .reflection h2 {
+            color: var(--highlight);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .reflection h3 {
+            color: var(--highlight);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .reflection p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .reflection table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .reflection th, .reflection td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .reflection th {
+            background-color: var(--bg-secondary);
+            color: var(--highlight);
+        }
+
+        .concepts-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .concepts-list li {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .concepts-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .concepts-list span {
+            color: var(--highlight);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expandLine {
+            to { transform: scaleX(1); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .section { padding: 4rem 0; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .concepts-list { grid-template-columns: 1fr; }
+            .reflection { padding: 1rem; }
+            .reflection table { font-size: 0.9rem; }
+        }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <h1 class="title">Course Learning Reflections</h1>
+          <p class="subtitle">Reflections on Problem-Solving Techniques, Efficiency, Design Principles, and More</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">What Are the Kinds of Problems We See in Nature?</h2>
+          <div class="cards-grid">
+            <div class="card">
+              <h3>Iteration</h3>
+              <p>Natural cycles like day and night, and organisms adapting to environmental conditions.</p>
+            </div>
+            <div class="card">
+              <h3>Recursion</h3>
+              <p>Branching of trees and the DNA molecule's structure and ancient tower of brahma problem and the game of pingala series and more.</p>
+            </div>
+            <div class="card">
+              <h3>Backtracking</h3>
+              <p>Seen in natural selection and Darwin's theory, where non-functional traits are pruned and in n queens problem and generating the subsets and all the possible words from the phone's digit and knight tour problem.</p>
+            </div>
+          </div>
+
+          <div class="reflection">
+            <h2>Space and Time Efficiency</h2>
+            <p><strong>Space Efficiency:</strong> The additional space required by an algorithm.</p>
+            <p><strong>Time Efficiency:</strong> The total running time of an algorithm.</p>
+            <p>Efficient algorithms deliver quicker results, scale better, and are more resource-efficient.</p>
+            <table>
+                <tr>
+                    <th>Class of Problem</th>
+                    <th>Order of Growth</th>
+                </tr>
+                <tr>
+                    <td>Runtime remains constant regardless of input size</td>
+                    <td>Constant</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows logarithmically with input size</td>
+                    <td>Logarithmic</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows proportionally with input size</td>
+                    <td>Linear</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows faster than linear but slower than quadratic</td>
+                    <td>Linear Logarithmic</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows quadratically (e.g., nested loops)</td>
+                    <td>Quadratic</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows steeper than quadratic</td>
+                    <td>Cubic</td>
+                </tr>
+                <tr>
+                    <td>Runtime grows exponentially with input size</td>
+                    <td>Exponential</td>
+                </tr>
+            </table>
+          </div>
+
+          <div class="reflection">
+            <h2>Algorithmic Concepts</h2>
+            <ul class="concepts-list">
+              <li><span>Decomposition</span> Breaks a large problem into smaller sub-problems, making it easier to manage and solve we have seen it in the activity of zombie child detection carried out in lab 1.</li>
+              <li><span>Pattern Recognition</span> Identifies recurring patterns to generalize solutions and transfer knowledge across domains we have seen it in representation system activity in lab 1 and forts of india from portfolio.</li>
+              <li><span>Abstraction</span> Simplifies a problem by focusing on key features and ignoring unnecessary details we have seen it in shapes and sizes of activity in lab 1 and guernica and abstrack model in portfoloio assignment.</li>
+              <li><span>Brave and Cautious Travel</span> Refers to graph traversal methods: "Brave" is Depth-First Search (DFS), while "Cautious" is Breadth-First Search (BFS).</li>
+              <li><span>Pruning</span> Eliminates irrelevant parts of a problem or data set to improve efficiency, as used in search algorithms like N-Queens and subset generation problem.</li>
+              <li><span>Lazy Propagation/Evaluation</span> Delays updates in data structures like segment trees until necessary, optimizing performance.</li>
+              <li><span>Sliding Window</span> Maintains relevant information within a moving window over data to optimize sub-array problems.</li>
+              <li><span>Level Order Traversal</span> Systematically visits nodes level by level, commonly used in BFS of trees.</li>
+              <li><span>Hierarchical Data</span> Organizes data in a parent-child tree structure, aiding in efficient navigation and organization.</li>
+              <li><span>Edge Relaxation</span> Updates shortest path distances in graph algorithms by refining estimates through connected edges used in dijkstras algorithm.</li>
+              <li><span>Balancing and Rotations</span> Maintains efficiency in tree structures (e.g., AVL trees) by ensuring balance through rotations.</li>
+              <li><span>Kleene Closure</span> Addresses the transitive property in graph theory, often used in finding strongly connected components or shortest paths.</li>
+              <li><span>Pre-Computing</span> Calculates and stores frequently used values in advance to enhance algorithm performance this technique is used in sparse table.</li>
+              <li><span>Parental Dominance</span> Enforces a hierarchical relationship in data structures like heaps, where parents dominate child values.</li>
+              <li><span>Prefix and Suffix</span> Substrings at the start and end of strings, used in text processing, pattern matching, and data analysis.</li>
+              <li><span>Partitioning</span> Divides a problem into smaller sub-problems to reduce complexity, used in sorting and graph algorithms.</li>
+              <li><span>Bit Manipulations</span> Efficiently works with binary data, optimizing computations and memory usage.</li>
+              <li><span>Memoization</span> Stores results of previous function calls to avoid redundant computations, enhancing efficiency in recursive algorithms.</li>
+              <li><span>Invariants</span> Conditions that remain constant during computations, ensuring correctness and simplifying debugging.</li>
+              <li><span>Shortest Path Trees</span> Structures that show shortest paths from a source to all other points in a graph, aiding in routing and navigation.</li>
+            </ul>
+          </div>
+
+          <div class="reflection">
+            <h2>Hierarchical Data and Tree Structures</h2>
+            <p>To manage hierarchical data effectively, we started with basic tree structures and gradually introduced new techniques to make operations like searching, inserting, and deleting faster and more efficient:</p>
+            
+            <h3>Tree</h3>
+            <p>A tree represents hierarchical relationships, like family trees or file systems, where each element (node) can have multiple children. However, a simple tree doesn't help much when it comes to speeding up searches or organizing data efficiently.</p>
+            
+            <h3>Binary Tree</h3>
+            <p>A binary tree has two children, helping to organize data. it's not efficient for operations like searching or inserting new nodes.</p>
+            
+            <h3>Binary Search Tree (BST)</h3>
+            <p>An improvement over binary tree is A binary search tree (BST) it is basically a binary tree with binary search propertyin which the left child of a node is smaller, and the right child is larger. This speeds up searches, but if the tree becomes left skewed or right skewed its time complexity to search and insert becomes O(n), which is suboptimal.</p>
+            
+            <h3>2-3 Tree</h3>
+            <p>in order to solve the issue of BSt ie skewness 2-3 tree comes into picture.The 2-3 tree addresses the issue of skewness of trees by being a self-balancing structure. Nodes can have two or three children, the tree remains balanced and operations like searching are efficient with a time complexity of O(log n).</p>
+            
+            <h3>AVL Tree</h3>
+            <p>An AVL tree takes balancing further by using rotations to maintain the height difference between the left and right subtrees of each node. This gives O(log n) time complexity for operations but takes large number rotations during insertion and deletetions.</p>
+            
+            <h3>Red-Black Tree</h3>
+            <p>To reduce the number of rotations, the Red-Black tree comes into picture (red or black) for nodes. it is efficient for operations with fewer rotations.</p>
+            
+            <h3>Heap (Priority Queue)</h3>
+            <p>For prioritizing elements (in task scheduling or priority queues), heaps are used. A heap is a binary tree which follows parental dominance where each parent node is either greater (max-heap) or smaller (min-heap) than its children. It ensures quick access to the highest or lowest priority element, with insertion and removal operations being efficient.</p>
+            
+            <h3>Trie</h3>
+            <p>To handle strings and prefix-based searches, a trie stores characters in nodes. This makes it extremely efficient for operations like autocomplete or dictionary lookups, as searching, inserting, or deleting strings depends only on their length, not the total number of strings stored.</p>
+          </div>
+        </div>
+      </section>
+      <!-- Previous content remains unchanged until the closing main tag -->
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">The Need for Array Query Algorithms</h2>
+          
+          <div class="reflection">
+            <p>Array query algorithms are essential for efficiently retrieving information from specific ranges within given data. They are useful in scenarios where we frequently query about data sub-range such as finding the sum, minimum, or maximum within a range. Without these algorithms, recalculating values for each query would be difficult, especially for large data. These algorithms help reduce time complexity, helps for applications involving dynamic or static datas.</p>
+            
+            <h3>Principles of Array Query Algorithms</h3>
+            <ul class="concepts-list">
+              <li><span>Precomputation</span>Many algorithms, like lookup tables and sparse tables, works on precomputing values for different ranges to execute queries fastly.</li>
+              <li><span>Efficiency</span>The goal of array query is to reduce time complexity from linear (O(n)) to logarithmic (O(log n)) or even constant time (O(1)).</li>
+              <li><span>Space-Time Tradeoff</span>While lookup tables provide constant-time queries, they require very large memory. Sparse tables and segment trees optimize this both space and query time.</li>
+              <li><span>Dynamic and Static Data</span>Algorithms like segment trees and Fenwick trees handle dynamic datasets well, while sparse tables are suited for static datasets with no updates.</li>
+            </ul>
+          </div>
+
+          <div class="reflection">
+            <h2>Applications of Array Query Algorithms</h2>
+            <div class="cards-grid">
+              <div class="card">
+                <h3>E-commerce Filtering</h3>
+                <p>Platforms like Amazon use range queries to filter products by price, improving user experience.</p>
+              </div>
+              <div class="card">
+                <h3>Navigation Apps</h3>
+                <p>Google Maps uses range queries to find locations within a specific distance.</p>
+              </div>
+              <div class="card">
+                <h3>Financial Platforms</h3>
+                <p>Traders use range queries to analyze stock performance over time, aiding investment decisions.</p>
+              </div>
+              <div class="card">
+                <h3>Sports Analytics</h3>
+                <p>Coaches use range queries to access player statistics over specific periods for strategic planning.</p>
+              </div>
+              <div class="card">
+                <h3>Weather Apps</h3>
+                <p>Users can query historical weather data to make informed travel or activity plans.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reflection">
+            <h2>Common Algorithms and Structures</h2>
+            
+            <div class="concepts-list">
+              <li>
+                <span>Lookup Tables</span>
+                <ul>
+                  <li>Precomputes results for all possible ranges.</li>
+                  <li>Gives constant-time query access but uses large space.</li>
+                  <li>Inefficient for dynamic datasets due to the need for complete recomputation after updates.</li>
+                </ul>
+              </li>
+              <li>
+                <span>Segment Trees</span>
+                <ul>
+                  <li>Divides the dataset into segments, storing aggregated values in a binary tree.</li>
+                  <li>Handles updates and queries efficiently in O(log n) time.</li>
+                  <li>Suitable for dynamic systems requiring frequent updates and queries.</li>
+                </ul>
+              </li>
+              <li>
+                <span>Fenwick Trees</span>
+                <ul>
+                  <li>Optimized for cumulative queries, such as prefix sums.</li>
+                  <li>Used in financial and monitoring systems.</li>
+                </ul>
+              </li>
+              <li>
+                <span>Sparse Tables</span>
+                <ul>
+                  <li>Space-efficient compared to lookup tables.</li>
+                  <li>Provides quick access for static datasets without updates.</li>
+                </ul>
+              </li>
+            </div>
+          </div>
+
+          <div class="reflection">
+            <h2>Implications</h2>
+            <ul class="concepts-list">
+              <li><span>Computational Efficiency</span>Range query algorithms improve performance in real-time systems and large-scale applications.</li>
+              <li><span>Scalability</span>Efficient query handling supports larger datasets and complex applications.</li>
+              <li><span>Usability</span>Enhanced user experience in apps and platforms where range queries are common.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Tree and Graph Traversal Techniques</h2>
+          
+          <div class="reflection">
+            <h2>Tree Traversal Techniques</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Pre-order</th>
+                  <th>In-order</th>
+                  <th>Post-order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>root -> left -> right</td>
+                  <td>left -> root -> right<br><em>gives elements in sorted order</em></td>
+                  <td>left -> right -> root</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 class="mt-8">Graph Traversal Techniques</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>DFS</th>
+                  <th>BFS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Brave ones<br>
+                    Stack is used<br>
+                    Tree edges are back edges
+                  </td>
+                  <td>
+                    Cautious ones<br>
+                    Queue is used<br>
+                    Tree edges are cross edges
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="reflection">
+            <h2>Difference Between Trees and Graphs</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>TREES</th>
+                  <th>GRAPHS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Collections of nodes and edges</td>
+                  <td>Collections of vertices and edges</td>
+                </tr>
+                <tr>
+                  <td>Has a unique root node</td>
+                  <td>No unique node</td>
+                </tr>
+                <tr>
+                  <td>Acyclic</td>
+                  <td>Cyclic</td>
+                </tr>
+                <tr>
+                  <td>Pre-order, In-order, Post-order Traversal</td>
+                  <td>DFS, BFS Traversal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="reflection">
+            <h2>Applications</h2>
+            <div class="concepts-list">
+              <li>
+                <span>Trees Applications</span>
+                <ul>
+                  <li>Used in file systems</li>
+                  <li>Used in artificial intelligence</li>
+                  <li>Used to implement searching and sorting algorithms</li>
+                  <li>Variants are used to implement dictionaries</li>
+                </ul>
+              </li>
+              <li>
+                <span>Graphs Applications</span>
+                <ul>
+                  <li>Used in Google Maps for building transportation systems</li>
+                  <li>Used in Facebook and LinkedIn</li>
+                  <li>In operating systems</li>
+                  <li>In mapping systems</li>
+                </ul>
+              </li>
+              <li>
+                <span>DFS Applications</span>
+                <ul>
+                  <li>Used to detect cycles in a graph</li>
+                  <li>Used in path finding</li>
+                  <li>Used in bipartite graph</li>
+                  <li>Used in solving maze with one solution</li>
+                </ul>
+              </li>
+              <li>
+                <span>BFS Applications</span>
+                <ul>
+                  <li>Used in crawlers</li>
+                  <li>Used in social networking</li>
+                  <li>GPS systems</li>
+                  <li>Cycle detection</li>
+                </ul>
+              </li>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Connection of Sorting Algorithms in Real World</h2>
+          
+          <div class="reflection">
+            <div class="concepts-list">
+              <li>
+                <span>Bubble Sort</span>
+                <p>Used by programmers as a basic learning algorithm.</p>
+              </li>
+              <li>
+                <span>Selection Sort</span>
+                <p>Used when swap operations are costly, for example when sorting arrays of structures.</p>
+              </li>
+              <li>
+                <span>Insertion Sort</span>
+                <p>Optimal choice when the dataset is almost sorted.</p>
+              </li>
+              <li>
+                <span>Merge Sort</span>
+                <p>Preferred for sorting linked lists and handling large amounts of data.</p>
+              </li>
+              <li>
+                <span>Quick Sort</span>
+                <p>Efficient for sorting random data distributions.</p>
+              </li>
+              <li>
+                <span>Heap Sort</span>
+                <p>Used to find nth largest or smallest elements and implemented in priority queues.</p>
+              </li>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Searching and String Matching Algorithms</h2>
+          
+          <div class="reflection">
+            <h2>Key Algorithms</h2>
+            
+            <div class="concepts-list">
+              <li>
+                <span>Linear Search</span>
+                <p>A simple search algorithm which iterates through each element one by one.</p>
+                <ul>
+                  <li>Complexity: O(N)</li>
+                  <li>Design principle: Brute Force</li>
+                </ul>
+              </li>
+              
+              <li>
+                <span>Binary Search</span>
+                <p>Divides the search space into two equal halves by comparing middle element with key. Faster than linear search.</p>
+                <ul>
+                  <li>Complexity: O(log N)</li>
+                  <li>Design Principle: Decrease and Conquer</li>
+                </ul>
+              </li>
+
+              <li>
+                <span>Brute Force String Matching</span>
+                <ul>
+                  <li>Simple and iterative approach</li>
+                  <li>Compares characters of the pattern with the text one by one</li>
+                  <li>Time complexity: O(mn)</li>
+                  <li>Used in recommendation engines</li>
+                  <li>Design principle: Brute Force</li>
+                </ul>
+              </li>
+
+              <li>
+                <span>Knuth-Morris-Pratt (KMP)</span>
+                <ul>
+                  <li>Preprocesses the pattern to create a "prefix function"</li>
+                  <li>Avoids redundant comparisons</li>
+                  <li>Time complexity: O(m + n)</li>
+                  <li>Used in DNA subsequence Matching</li>
+                </ul>
+              </li>
+
+              <li>
+                <span>Rabin-Karp</span>
+                <ul>
+                  <li>Uses hashing to quickly compare substrings</li>
+                  <li>Optimized with rolling hash functions</li>
+                  <li>Time complexity: O(mn) worst case</li>
+                  <li>Used in intrusion detection in cyber security</li>
+                </ul>
+              </li>
+
+              <li>
+                <span>Boyer-Moore</span>
+                <ul>
+                  <li>Uses "bad symbol shift" and "good suffix shift" tables</li>
+                  <li>Highly efficient for large texts and patterns</li>
+                  <li>Time complexity: O(mn) worst case, often linear in practice</li>
+                  <li>Used in searching patterns in webpages</li>
+                  <li>Design principle: Space and Time trade off</li>
+                </ul>
+              </li>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Graph Algorithms and Their Applications</h2>
+          
+          <div class="reflection">
+            <h2>Spanning Trees</h2>
+            <p>A connected, acyclic subgraph that includes all vertices, determined by Kruskal's and Prim's algorithm.</p>
+            
+            <div class="concepts-list">
+              <li>
+                <span>Key Importance</span>
+                <ul>
+                  <li>Minimizes network costs (ex: Minimum Spanning Tree)</li>
+                  <li>Eliminates redundancy (ex: cycles)</li>
+                  <li>Used in clustering, network design, and power grids</li>
+                </ul>
+              </li>
+              <li>
+                <span>Real-world Applications</span>
+                <ul>
+                  <li>Communication networks</li>
+                  <li>Circuit design</li>
+                  <li>Water pipelining</li>
+                </ul>
+              </li>
+            </div>
+          </div>
+
+          <div class="reflection">
+            <h2>Shortest Paths</h2>
+            <p>The minimum distance or cost between two nodes in a graph, determined by Dijkstra, Bellman-Ford, and Floyd algorithms.</p>
+            
+            <div class="concepts-list">
+              <li>
+                <span>Key Importance</span>
+                <ul>
+                  <li>Optimizes routes (ex: GPS, logistics)</li>
+                  <li>Reduces resource usage in data flow or transportation</li>
+                  <li>Essential for AI, robotics, and dynamic systems</li>
+                </ul>
+              </li>
+              <li>
+                <span>Real-world Applications</span>
+                <ul>
+                  <li>Navigation</li>
+                  <li>Supply chains</li>
+                  <li>Computer network routing</li>
+                </ul>
+              </li>
+            </div>
+          </div>
+
+          <div class="reflection">
+            <h2>Design Techniques</h2>
+            <div class="concepts-list">
+              <li>
+                <span>Brute Force</span>
+                <p>A straightforward approach to solve the problem. Seen in bubble sort, selection sort, linear search, BFS.</p>
+              </li>
+              <li>
+                <span>Decrease and Conquer</span>
+                <p>Based on exploiting the relation between a solution to a given instance of a problem and its solution to its smaller instance. Examples: insertion sort, binary search.</p>
+              </li>
+              <li>
+                <span>Divide and Conquer</span>
+                <p>A problem is divided into several sub-problems of the same type. Examples: merge sort, quick sort.</p>
+              </li>
+              <li>
+                <span>Transform and Conquer</span>
+                <p>First transforms the problem and then conquers it. Examples: heap sort, AVL tree.</p>
+              </li>
+              <li>
+                <span>Space and Time Trade-off</span>
+                <p>Balances memory usage with execution speed. Example: Boyer-Moore algorithm.</p>
+              </li>
+              <li>
+                <span>Dynamic Programming</span>
+                <p>Solves complex problems by breaking them down into simpler subproblems. Example: Floyd-Warshall algorithm.</p>
+              </li>
+              <li>
+                <span>Greedy Technique</span>
+                <p>Makes locally optimal choices at each step. Examples: Prim's, Kruskal's, Dijkstra's algorithms.</p>
+              </li>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section, .reflection').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+  </body>
+</html>
