@@ -13,7 +13,7 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int n) {
     }
     distance[start] = 0;
 
-    priority_queue<pair<int, int>, pair<int, int>, greater<pair<int, int>>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     pq.push({0, start});
 
     while (!pq.empty()) {
