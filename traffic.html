@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Route</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(56, 189, 248, 0.1) 0%, 
+                transparent 50%);
+            opacity: 0;
+            animation: pulseGradient 8s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(
+                var(--gradient-angle),
+                var(--highlight),
+                var(--text-primary)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .chart-container {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .chart-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .implementation-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--highlight);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0;
+        }
+
+        .implementation-btn:hover {
+            background-color: var(--highlight);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: var(--highlight);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .section { padding: 2rem 0; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="title">Ambulance Route</h1>
+                <p>Advanced algorithms for efficient ambulance routing</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <div class="card">
+                <h2>Route Congestion Analysis</h2>
+                <p>The chart below illustrates the distribution of route congestion across various areas in a city. By analyzing this data, planners can identify critical points and implement measures to ensure smooth ambulance movement.</p>
+                <div class="chart-container">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Solutions & Implementation</h2>
+            
+            <div class="card">
+                <h3>Optimal Routing with Graph Algorithms</h3>
+                <p><strong>Use Dijkstra's Algorithm:</strong> Identify the shortest routes for ambulances, minimizing response times.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/Dijkstra%E2%80%99s.cpp'">View Implementation</button>
+                
+                <p><strong>Implement Bellman-Ford Algorithm:</strong> Adapt to dynamic road conditions and recalculate optimal routes.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/Bellman-Ford.cpp'">View Implementation</button>
+            </div>
+
+            <div class="card">
+                <h3>Congestion Monitoring Using Greedy Algorithms</h3>
+                <p><strong>Deploy Sensors:</strong> Install traffic sensors and use Greedy Algorithms for real-time adjustments to ambulance routes.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/greedy.cpp'">View Implementation</button>
+                
+                <p><strong>Optimize Traffic Signals:</strong> Use Backtracking for signal timing optimization to prioritize ambulance movement.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/Backtracking.cpp'">View Implementation</button>
+            </div>
+
+            <div class="card">
+                <h3>Predictive Route Analysis</h3>
+                <p><strong>Analyze Traffic Data:</strong> Implement Merge Sort for prioritizing routes based on congestion severity.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/MergeSort.cpp'">View Implementation</button>
+                
+                <p><strong>Locate Patterns:</strong> Utilize Binary Search for identifying recurring congestion points on ambulance routes.</p>
+                <button class="implementation-btn" onclick="window.location.href='https://github.com/HarshPatil30/DAA-PORTFOLIO/blob/main/BinarySearch.cpp'">View Implementation</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Intersection Observer setup
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.classList.contains('chart-container')) {
+                        initializeChart();
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        document.querySelectorAll('.section, .chart-container').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Chart setup
+        let chart = null;
+
+        function initializeChart() {
+            if (chart) return; // Prevent multiple initializations
+
+            const ctx = document.getElementById('trafficChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#38bdf8');
+            gradient.addColorStop(1, '#0ea5e9');
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['CBD', 'Residential Areas', 'Industrial Zone', 'Suburban Areas', 'Highways'],
+                    datasets: [{
+                        label: 'Route Congestion (%)',
+                        data: [60, 30, 40, 20, 80],
+                        backgroundColor: gradient,
+                        borderColor: '#0ea5e9',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        hoverBackgroundColor: '#60a5fa'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart',
+                        delay: (context) => context.dataIndex * 100
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#151f32',
+                            titleFont: {
+                                family: 'Space Grotesk',
+                                size: 14
+                            },
+                            bodyFont: {
+                                family: 'Space Grotesk',
+                                size: 13
+                            },
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                },
+                                callback: value => value + '%'
+                            },
+                            grid: {
+                                color: '#1e293b'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            },
+                            grid: {
+                                color: '#1e293b'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
