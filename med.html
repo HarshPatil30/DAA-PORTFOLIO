@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Supply Chain Management</title>
+    <title>Medical Resource Allocation</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General styles */
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +34,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(50px); /* Starting position below the viewport */
+            transform: translateY(50px);
             animation: fadeInHeader 1s forwards 0.5s;
         }
 
@@ -47,7 +46,6 @@
             color: #94a3b8;
         }
 
-        /* Animation to make the header appear from below */
         @keyframes fadeInHeader {
             0% {
                 opacity: 0;
@@ -60,7 +58,6 @@
             }
         }
 
-        /* Main content and sections */
         main {
             background: #2d3748;
             padding: 3rem;
@@ -86,7 +83,7 @@
             border-bottom: 2px solid #94a3b8;
             padding-bottom: 0.5rem;
             opacity: 0;
-            transform: translateX(-100%); /* From left */
+            transform: translateX(-100%);
             transition: opacity 1s ease, transform 1s ease;
         }
 
@@ -108,7 +105,6 @@
             transform: translateY(0);
         }
 
-        /* Buttons */
         .implementation-btn {
             display: inline-block;
             font-family: 'Poppins', sans-serif;
@@ -145,7 +141,6 @@
             text-align: center;
         }
 
-        /* Responsive design */
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
@@ -165,38 +160,38 @@
 
 <body>
     <header>
-        <h1>Hospital Supply Chain Management</h1>
+        <h1>Medical Resource Allocation</h1>
     </header>
 
     <main>
         <section>
             <h2 class="hidden">Introduction</h2>
-            <p class="hidden">Effective management of the hospital supply chain ensures that critical medical supplies are always available to departments and healthcare providers. The challenge lies in optimizing procurement, storage, and distribution to maintain efficiency and reduce costs.</p>
+            <p class="hidden">Efficient medical resource allocation is crucial for healthcare systems to meet patient needs, especially in high-demand scenarios. It ensures that the right medical resources (such as medicines, equipment, and staff) are allocated where they are needed most, minimizing wastage and maximizing effectiveness.</p>
         </section>
 
         <section>
             <h2 class="hidden">Solutions and Implementation</h2>
 
-            <h3 class="hidden">Procurement Optimization</h3>
-            <p class="hidden">Apply demand forecasting algorithms and inventory models to optimize procurement schedules, ensuring that medical supplies are purchased in the right quantities at the right time, minimizing wastage and ensuring availability.</p>
-            <button class="implementation-btn" onclick="alert('Procurement Optimization Algorithm Implementation in Python coming soon!')">View Implementation</button>
+            <h3 class="hidden">Demand Forecasting</h3>
+            <p class="hidden">Use machine learning algorithms and statistical methods to predict future demand for medical resources based on historical data, trends, and various factors such as population growth or seasonal diseases.</p>
+            <button class="implementation-btn" onclick="alert('Demand Forecasting Algorithm Implementation in Python coming soon!')">View Implementation</button>
 
-            <h3 class="hidden">Storage Management</h3>
-            <p class="hidden">Use optimization techniques like multi-objective programming to ensure that supplies are stored in optimal conditions, minimizing costs associated with storage space while maintaining the integrity of medical products.</p>
-            <button class="implementation-btn" onclick="alert('Storage Management Algorithm Implementation coming soon!')">View Implementation</button>
+            <h3 class="hidden">Inventory Optimization</h3>
+            <p class="hidden">Implement optimization techniques such as linear programming and multi-objective optimization to manage the inventory of medical resources, ensuring a balance between supply, demand, and costs.</p>
+            <button class="implementation-btn" onclick="alert('Inventory Optimization Algorithm Implementation coming soon!')">View Implementation</button>
 
-            <h3 class="hidden">Distribution Routing</h3>
-            <p class="hidden">Implement graph algorithms such as Dijkstra's or A* to optimize delivery routes from storage areas to hospital departments, ensuring that medical supplies are delivered efficiently and on time, reducing delivery costs.</p>
-            <button class="implementation-btn" onclick="alert('Distribution Routing Algorithm Implementation in C++ coming soon!')">View Implementation</button>
+            <h3 class="hidden">Resource Scheduling</h3>
+            <p class="hidden">Design scheduling algorithms for staff and equipment that maximize resource utilization while minimizing wait times and overuse. Algorithms like genetic algorithms or scheduling heuristics can be used to create efficient schedules.</p>
+            <button class="implementation-btn" onclick="alert('Resource Scheduling Algorithm Implementation coming soon!')">View Implementation</button>
 
-            <h3 class="hidden">Supplier Selection and Evaluation</h3>
-            <p class="hidden">Design a decision-support model that helps hospital managers evaluate and select suppliers based on criteria such as cost, delivery time, and reliability, ensuring that hospitals work with the most reliable suppliers.</p>
-            <button class="implementation-btn" onclick="alert('Supplier Evaluation Model Implementation coming soon!')">View Implementation</button>
+            <h3 class="hidden">Prioritization Models</h3>
+            <p class="hidden">Create models to prioritize medical resources based on urgency, patient needs, and available capacity, allowing healthcare providers to allocate resources effectively during crises.</p>
+            <button class="implementation-btn" onclick="alert('Prioritization Model Implementation coming soon!')">View Implementation</button>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Hospital Supply Chain Management | Designed with care</p>
+        <p>&copy; 2024 Medical Resource Allocation | Designed with care</p>
     </footer>
 
     <script>
