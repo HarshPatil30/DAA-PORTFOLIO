@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Workforce Scheduling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(56, 189, 248, 0.1) 0%, 
+                transparent 50%);
+            opacity: 0;
+            animation: pulseGradient 8s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(
+                var(--gradient-angle),
+                var(--highlight),
+                var(--text-primary)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .chart-container {
+            height: 400px;
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .chart-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chart-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        h2 {
+            color: var(--highlight);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .section { padding: 2rem 0; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="title">Healthcare Workforce Scheduling</h1>
+                <p>Advanced algorithms for efficient healthcare staff scheduling</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2>Algorithms & Implementation</h2>
+            
+            <div class="card">
+                <h3>1. Greedy Algorithms</h3>
+                <p>Use Case: Assigning healthcare workers to shifts in a way that minimizes immediate costs or maximizes coverage.</p>
+                <p>Explanation: A Greedy Algorithm can be used to assign workers to shifts by always selecting the best available worker for the current shift based on specific criteria, such as minimizing overtime or balancing workloads.</p>
+            </div>
+
+            <div class="card">
+                <h3>2. Breadth-First Search (BFS)</h3>
+                <p>Use Case: Searching for the shortest path to assign shifts while considering worker availability and shift requirements.</p>
+                <p>Explanation: BFS can be applied to explore the schedule space, ensuring that the algorithm checks all possible shift assignments at each level and avoids missing any feasible solutions. BFS can help explore multiple worker assignments simultaneously and find the optimal solution.</p>
+            </div>
+
+            <div class="card">
+                <h3>3. Depth-First Search (DFS)</h3>
+                <p>Use Case: Assigning workers to shifts recursively and backtracking if a constraint is violated.</p>
+                <p>Explanation: DFS can be used to explore different shift assignments and backtrack if an assignment leads to a constraint violation (e.g., exceeding maximum working hours or not meeting staffing requirements). It can help find feasible schedules by exploring different paths.</p>
+            </div>
+
+            <div class="card">
+                <h3>4. Kruskal's Algorithm</h3>
+                <p>Use Case: Finding the optimal worker assignments when multiple workers have similar qualifications and experience.</p>
+                <p>Explanation: While typically used for graph problems, Kruskal's Algorithm could be adapted to select the most efficient worker assignments, ensuring that each shift is covered with minimal cost or conflict, similar to finding the minimum spanning tree.</p>
+            </div>
+
+            <div class="card">
+                <h3>5. Dijkstra's Algorithm</h3>
+                <p>Use Case: Finding the optimal assignment of healthcare workers to shifts based on various factors such as worker preferences, skill levels, and availability.</p>
+                <p>Explanation: Dijkstra's Algorithm could be adapted to prioritize shift assignments that minimize overtime or worker dissatisfaction. It can help identify the best possible schedule by calculating the "shortest" path to an optimal solution based on these criteria.</p>
+            </div>
+
+            <div class="card">
+                <h3>6. Bellman-Ford Algorithm</h3>
+                <p>Use Case: Handling negative or dynamic costs, such as adjusting shifts based on changing availability or unexpected absences.</p>
+                <p>Explanation: Bellman-Ford can be useful when there are dynamic elements in the scheduling process, like changes in worker availability or shift costs, as it can handle negative weights and re-evaluate the schedule over time.</p>
+            </div>
+
+            <div class="card">
+                <h3>7. Floyd-Warshall Algorithm</h3>
+                <p>Use Case: Calculating the shortest paths between all workers and shifts to optimize the scheduling process.</p>
+                <p>Explanation: The Floyd-Warshall Algorithm could be used to calculate the optimal shift assignments across multiple workers, ensuring that all constraints (e.g., availability, skill matching) are respected and minimizing the overall cost or overtime.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Staff Distribution Analysis</h2>
+            <div class="card">
+                <h3>Department-wise Staff Distribution</h3>
+                <p class="chart-description">Real-time visualization of staff allocation across different hospital departments, highlighting current coverage and potential staffing gaps. This analysis helps optimize workforce distribution and ensure adequate coverage across all departments.</p>
+                <div class="chart-container">
+                    <canvas id="staffDistributionChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Intersection Observer setup
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.querySelector('canvas')) {
+                        initializeStaffDistributionChart();
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        // Staff Distribution Chart
+        function initializeStaffDistributionChart() {
+            const ctx = document.getElementById('staffDistributionChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#38bdf8');
+            gradient.addColorStop(1, '#0ea5e9');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Emergency', 'ICU', 'Surgery', 'General Ward', 'Outpatient'],
+                    datasets: [{
+                        label: 'Staff Distribution',
+                        data: [25, 30, 20, 15, 10],
+                        backgroundColor: gradient,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            labels: { 
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#151f32',
+                            titleFont: { 
+                                family: 'Space Grotesk',
+                                size: 14
+                            },
+                            bodyFont: { 
+                                family: 'Space Grotesk',
+                                size: 13
+                            },
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: '#1e293b' },
+                            ticks: { 
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { color: '#1e293b' },
+                            ticks: { 
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Observe sections and chart containers
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.section, .chart-container').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
