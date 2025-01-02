@@ -6,7 +6,7 @@ using namespace std;
 
 #define MAX_NODES 5
 
-void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n) {
+void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string places[MAX_NODES]) {
     int distance[MAX_NODES];
     int previous[MAX_NODES];
     for (int i = 0; i < n; i++) {
@@ -39,7 +39,7 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n) {
         }
     }
 
-    cout << "Dijkstra's Algorithm: Shortest route for ambulance from " << start << " to " << end << "\n";
+    cout << "Dijkstra's Algorithm: Shortest route from " << places[start] << " (" << start << ") to " << places[end] << " (" << end << ")\n";
     if (distance[end] == INT_MAX) {
         cout << "No direct path found, trying alternative routes...\n";
     } else {
@@ -50,7 +50,8 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n) {
             path.push_back(at);
         }
         for (int i = path.size() - 1; i >= 0; i--) {
-            cout << path[i] << " ";
+            cout << places[path[i]] << " (" << path[i] << ")";
+            if (i > 0) cout << " -> ";
         }
         cout << endl;
     }
@@ -65,10 +66,22 @@ int main() {
         {-1, -1, -1, -1, -1},
     };
 
-    int startNode = 3;
-    int endNode = 0;
+    string places[MAX_NODES] = {
+        "City Center", 
+        "Restaurant", 
+        "Intersection 2", 
+        "Hospital", 
+        "End Node"
+    };
 
-    dijkstra(graph, startNode, endNode, MAX_NODES);
+    int startNode, endNode;
+
+    cout << "Enter the start intersection (0 to " << MAX_NODES - 1 << "): ";
+    cin >> startNode;
+    cout << "Enter the end intersection (0 to " << MAX_NODES - 1 << "): ";
+    cin >> endNode;
+
+    dijkstra(graph, startNode, endNode, MAX_NODES, places);
 
     return 0;
 }
