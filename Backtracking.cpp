@@ -1,11 +1,11 @@
 #include <iostream>
-#include <vector>
+#include <climits>
 
 using namespace std;
 
 #define MAX_INTERSECTIONS 5
 
-bool isValid(const vector<int>& signalTimings, int intersection, int currentTiming, int totalTime) {
+bool isValid(int signalTimings[MAX_INTERSECTIONS], int intersection, int currentTiming, int totalTime) {
     int totalWaitTime = 0;
     for (int i = 0; i < intersection; i++) {
         totalWaitTime += signalTimings[i];
@@ -17,7 +17,7 @@ bool isValid(const vector<int>& signalTimings, int intersection, int currentTimi
     return true;
 }
 
-bool optimizeSignalTimingsHelper(vector<int>& signalTimings, int intersection, int totalTime) {
+bool optimizeSignalTimingsHelper(int signalTimings[MAX_INTERSECTIONS], int intersection, int totalTime) {
     if (intersection == MAX_INTERSECTIONS) {
         return true;
     }
@@ -28,7 +28,7 @@ bool optimizeSignalTimingsHelper(vector<int>& signalTimings, int intersection, i
             if (optimizeSignalTimingsHelper(signalTimings, intersection + 1, totalTime)) {
                 return true;
             }
-            signalTimings[intersection] = 0; 
+            signalTimings[intersection] = 0;  // Backtrack
         }
     }
 
@@ -36,7 +36,7 @@ bool optimizeSignalTimingsHelper(vector<int>& signalTimings, int intersection, i
 }
 
 void optimizeSignalTimings(int totalTime) {
-    vector<int> signalTimings(MAX_INTERSECTIONS, 0);
+    int signalTimings[MAX_INTERSECTIONS] = {0};
 
     if (optimizeSignalTimingsHelper(signalTimings, 0, totalTime)) {
         cout << "Optimized signal timings for each intersection:" << endl;
@@ -49,8 +49,19 @@ void optimizeSignalTimings(int totalTime) {
 }
 
 int main() {
-    int totalTime = 30; 
+    int totalTime;
 
+    cout << "Enter the total time available for optimization (in seconds): ";
+    cin >> totalTime;
+
+    int trafficDensity[MAX_INTERSECTIONS];
+    cout << "Enter the traffic density at each intersection (higher number means more traffic):" << endl;
+    for (int i = 0; i < MAX_INTERSECTIONS; i++) {
+        cout << "Intersection " << i + 1 << ": ";
+        cin >> trafficDensity[i];
+    }
+
+    cout << "\nOptimizing signal timings for the intersections..." << endl;
     optimizeSignalTimings(totalTime);
 
     return 0;
