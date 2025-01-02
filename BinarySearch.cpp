@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+// Binary Search function to locate the congestion level
 int binarySearch(int arr[], int left, int right, int target) {
     while (left <= right) {
         int mid = left + (right - left) / 2;
@@ -24,6 +25,7 @@ int binarySearch(int arr[], int left, int right, int target) {
     return -1;
 }
 
+// Function to locate the congestion patterns based on the user input
 void locateCongestionPatterns(int arr[], int size, int target) {
     int result = binarySearch(arr, 0, size - 1, target);
     
@@ -35,10 +37,21 @@ void locateCongestionPatterns(int arr[], int size, int target) {
 }
 
 int main() {
-    int congestionLevels[] = {10, 20, 20, 30, 40, 40, 50, 60, 70, 80}; // Sorted traffic congestion levels
-    int size = sizeof(congestionLevels) / sizeof(congestionLevels[0]);
+    int size;
+    cout << "Enter the number of intersections (areas): ";
+    cin >> size;
 
-    int targetCongestion = 40; // Example: Searching for the congestion level of 40 units
+    int congestionLevels[size];
+
+    cout << "Enter the congestion levels at each intersection (sorted order preferred, higher number means more congestion):" << endl;
+    for (int i = 0; i < size; i++) {
+        cout << "Intersection " << i + 1 << ": ";
+        cin >> congestionLevels[i];
+    }
+
+    int targetCongestion;
+    cout << "\nEnter the congestion level to search for: ";
+    cin >> targetCongestion;
 
     locateCongestionPatterns(congestionLevels, size, targetCongestion);
 
