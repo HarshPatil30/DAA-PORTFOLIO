@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+#define MAX_INTERSECTIONS 5
+
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -49,18 +51,23 @@ void mergeSort(int arr[], int left, int right) {
 }
 
 void displayCongestionLevels(int arr[], int size) {
-    cout << "Congestion levels (sorted from lowest to highest):" << endl;
+    cout << "Congestion levels sorted from lowest to highest:" << endl;
     for (int i = 0; i < size; i++) {
-        cout << "Area " << i + 1 << ": " << arr[i] << " congestion units" << endl;
+        cout << "Intersection " << i + 1 << ": " << arr[i] << " congestion units" << endl;
     }
 }
 
 int main() {
-    int congestionLevels[] = {40, 10, 60, 30, 20};  // Example traffic congestion levels in different areas
-    int size = sizeof(congestionLevels) / sizeof(congestionLevels[0]);
+    int congestionLevels[MAX_INTERSECTIONS];  // Congestion levels for intersections
 
-    mergeSort(congestionLevels, 0, size - 1);
-    displayCongestionLevels(congestionLevels, size);
+    cout << "Enter the traffic congestion levels for " << MAX_INTERSECTIONS << " intersections:" << endl;
+    for (int i = 0; i < MAX_INTERSECTIONS; i++) {
+        cout << "Intersection " << i + 1 << ": ";
+        cin >> congestionLevels[i];  // Input congestion levels
+    }
+
+    mergeSort(congestionLevels, 0, MAX_INTERSECTIONS - 1);  // Sort congestion levels
+    displayCongestionLevels(congestionLevels, MAX_INTERSECTIONS);  // Display sorted congestion levels
 
     return 0;
 }
