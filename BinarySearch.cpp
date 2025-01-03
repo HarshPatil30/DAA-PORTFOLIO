@@ -1,38 +1,38 @@
 #include <iostream>
-#include <cstdlib>  // For rand() and srand()
-#include <ctime>    // For time()
+#include <cstdlib>  
+#include <ctime>    
 using namespace std;
 
 #define MAX_INTERSECTIONS 5
 
-// Binary Search function to locate the congestion level
+
 int binarySearch(int arr[], int left, int right, int target) {
     while (left <= right) {
         int mid = left + (right - left) / 2;
 
-        // Check if the target is at mid
+       
         if (arr[mid] == target) {
             return mid;
         }
 
-        // If target is smaller, ignore the right half
+      
         if (arr[mid] > target) {
             right = mid - 1;
         }
-        // If target is larger, ignore the left half
+   
         else {
             left = mid + 1;
         }
     }
 
-    // Target not found
+  
     return -1;
 }
 
-// Function to locate the congestion level based on the intersection number
+
 void locateCongestionLevel(int arr[], int idx[], int size, int target) {
     if (target >= 1 && target <= size) {
-        int intersectionIndex = target - 1;  // Convert to 0-based index
+        int intersectionIndex = target - 1; 
         cout << "Congestion level at Intersection " << target << " is " << arr[intersectionIndex] << " congestion units." << endl;
     } else {
         cout << "Invalid intersection number!" << endl;
@@ -56,7 +56,7 @@ void merge(int arr[], int left, int mid, int right, int idx[]) {
 
     int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
-        if (leftArr[i] >= rightArr[j]) { // Sort in descending order
+        if (leftArr[i] >= rightArr[j]) { 
             arr[k] = leftArr[i];
             idx[k] = leftIdx[i];
             i++;
