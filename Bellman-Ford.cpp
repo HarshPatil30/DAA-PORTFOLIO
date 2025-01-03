@@ -1,12 +1,13 @@
 #include <iostream>
 #include <climits>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 #define MAX_NODES 5
 
-void bellmanFord(int graph[MAX_NODES][MAX_NODES], int start, int end, int n) {
+void bellmanFord(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, vector<int> &shortestPath) {
     int distance[MAX_NODES];
     int previous[MAX_NODES];
     for (int i = 0; i < n; i++) {
@@ -32,47 +33,62 @@ void bellmanFord(int graph[MAX_NODES][MAX_NODES], int start, int end, int n) {
     } else {
         cout << "Time: " << distance[end] << " minutes\n";
         cout << "Path: ";
-        vector<int> path;
+        shortestPath.clear();
         for (int node = end; node != -1; node = previous[node]) {
-            path.push_back(node);
+            shortestPath.push_back(node);
         }
-        for (int j = path.size() - 1; j >= 0; j--) {
-            cout << path[j];
-            if (j > 0) cout << " -> ";
+        reverse(shortestPath.begin(), shortestPath.end());
+        for (size_t i = 0; i < shortestPath.size(); i++) {
+            cout << shortestPath[i];
+            if (i < shortestPath.size() - 1) cout << " -> ";
         }
         cout << endl;
     }
 }
 
-void updateGraph(int graph[MAX_NODES][MAX_NODES], int u, int v, int newWeight) {
-    graph[u][v] = newWeight;
-    graph[v][u] = newWeight;
+void updateTrafficOnPath(int graph[MAX_NODES][MAX_NODES], const vector<int> &shortestPath) {
+    cout << "\nTraffic condition update for edges in the shortest path:\n";
+    for (size_t i = 0; i < shortestPath.size() - 1; i++) {
+        int u = shortestPath[i];
+        int v = shortestPath[i + 1];
+        int newWeight;
+        cout << "Enter new weight for edge (" << u << " -> " << v << ") (-1 to block the road): ";
+        cin >> newWeight;
+        graph[u][v] = newWeight;
+        graph[v][u] = newWeight; 
+        cout << "Updated weight for edge (" << u << " -> " << v << ") is now " << newWeight << ".\n";
+    }
 }
 
 int main() {
-    int n = MAX_NODES;
-
     int graph[MAX_NODES][MAX_NODES] = {
-        {-1, 10, 5, -1, -1},
-        {-1, -1, 2, 1, -1},
-        {-1, -1, -1, 9, 2},
-        {-1, -1, -1, -1, 4},
-        {-1, -1, -1, -1, -1}
+        {0, 10, 5, -1, 2},  
+        {10, 0, 2, 1, -1}, 
+        {5, 2, 0, 9, 2},    
+        {-1, 1, 9, 0, 4},   
+        {2, -1, 2, 4, 0},  
+        
     };
 
     int startNode, endNode;
-    cout << "Enter the start intersection (0 to " << n - 1 << "): ";
+    cout << "Enter the start intersection (0 to " << MAX_NODES - 1 << "): ";
     cin >> startNode;
-    cout << "Enter the end intersection (0 to " << n - 1 << "): ";
+    cout << "Enter the end intersection (0 to " << MAX_NODES - 1 << "): ";
     cin >> endNode;
 
-    bellmanFord(graph, startNode, endNode, n);
+    vector<int> shortestPath;
+    bellmanFord(graph, startNode, endNode, MAX_NODES, shortestPath);
 
-    cout << "\nTraffic condition update: The road to the restaurant is now congested.\n";
-    updateGraph(graph, 0, 1, 20);
-
-    cout << "\nRecalculating shortest path with updated traffic...\n";
-    bellmanFord(graph, startNode, endNode, n);
+    char choice;
+    do {
+        cout << "\nDo you want to update traffic conditions for the shortest path? (y/n): ";
+        cin >> choice;
+        if (choice == 'y' || choice == 'Y') {
+            updateTrafficOnPath(graph, shortestPath);
+            cout << "\nRecalculating shortest path with updated traffic...\n";
+            bellmanFord(graph, startNode, endNode, MAX_NODES, shortestPath);
+        }
+    } while (choice == 'y' || choice == 'Y');
 
     return 0;
 }
