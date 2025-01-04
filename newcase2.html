@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Equipment Allocation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(56, 189, 248, 0.1) 0%, 
+                transparent 50%);
+            opacity: 0;
+            animation: pulseGradient 8s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px) rotateX(10deg);
+            animation: heroEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(
+                var(--gradient-angle),
+                var(--highlight),
+                var(--text-primary)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rotateGradient 10s linear infinite;
+        }
+
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .chart-container {
+            height: 400px;
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .chart-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chart-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        h2 {
+            color: var(--highlight);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        @keyframes rotateGradient {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .section { padding: 2rem 0; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="title">Healthcare Equipment Allocation</h1>
+                <p>Optimizing the allocation of medical equipment across hospitals</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2>Algorithms & Implementation</h2>
+            
+            <div class="card">
+                <h3>1. Priority Queues</h3>
+                <p>Use Case: Prioritizing the allocation of medical equipment to critical patients based on urgency.</p>
+                <p>Explanation: Priority Queues help assign medical equipment to patients with the highest priority, ensuring that urgent cases receive the resources they need first.</p>
+            </div>
+
+            <div class="card">
+                <h3>2. Greedy Algorithm</h3>
+                <p>Use Case: Minimizing resource wastage while allocating equipment.</p>
+                <p>Explanation: A Greedy Algorithm is used to make the best immediate choice for allocating equipment, aiming to minimize wastage or unused resources.</p>
+            </div>
+
+            <div class="card">
+                <h3>3. Dynamic Programming</h3>
+                <p>Use Case: Optimizing equipment allocation over time, taking changing demand into account.</p>
+                <p>Explanation: Dynamic Programming helps optimize the distribution of medical resources over time, adjusting allocations as demand or supply fluctuates.</p>
+            </div>
+
+            <div class="card">
+                <h3>4. Dijkstra's Algorithm</h3>
+                <p>Use Case: Finding the most efficient route for equipment delivery across multiple hospital departments.</p>
+                <p>Explanation: Dijkstra's Algorithm calculates the shortest and most efficient delivery routes for medical equipment, minimizing delivery time.</p>
+            </div>
+
+            <div class="card">
+                <h3>5. Floyd-Warshall Algorithm</h3>
+                <p>Use Case: Determining optimal allocation paths between multiple hospital locations.</p>
+                <p>Explanation: Floyd-Warshall can be used to calculate all pairs of shortest paths for equipment allocation across multiple hospital locations.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Equipment Allocation Overview</h2>
+            <div class="card">
+                <h3>Real-Time Equipment Allocation</h3>
+                <p class="chart-description">A visual representation of how medical equipment is distributed across various hospital departments. The chart highlights areas of high and low equipment allocation, allowing for better resource management.</p>
+                <div class="chart-container">
+                    <canvas id="equipmentAllocationChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Intersection Observer setup
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.querySelector('canvas')) {
+                        initializeEquipmentAllocationChart();
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        // Equipment Allocation Chart
+        function initializeEquipmentAllocationChart() {
+            const ctx = document.getElementById('equipmentAllocationChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#38bdf8');
+            gradient.addColorStop(1, '#0ea5e9');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Emergency', 'ICU', 'Surgery', 'General Ward', 'Outpatient'],
+                    datasets: [{
+                        label: 'Equipment Allocation',
+                        data: [50, 30, 40, 20, 10],
+                        backgroundColor: gradient,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            labels: { 
+                                color: '#f8fafc',
+                                font: {
+                                    family: 'Space Grotesk'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#151f32',
+                            titleFont: { 
+                                family: 'Space Grotesk',
+                                size: 14
+                            },
+                            bodyFont: { 
+                                family: 'Space Grotesk',
+                                size: 12
+                            },
+                            callbacks: {
+                                title: () => ''
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Observing charts and sections
+        observer.observe(document.querySelector('.chart-container'));
+        document.querySelectorAll('.section').forEach((section) => observer.observe(section));
+    </script>
+</body>
+</html>
