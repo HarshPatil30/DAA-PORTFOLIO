@@ -31,7 +31,7 @@ void bellmanFord(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, vec
     if (distance[end] == INT_MAX) {
         cout << "No route available\n";
     } else {
-        cout << "Time: " << distance[end] << " minutes\n";
+        cout << "Distance" << distance[end] << " Kilometer\n";
         cout << "Path: ";
         shortestPath.clear();
         for (int node = end; node != -1; node = previous[node]) {
@@ -55,19 +55,19 @@ void updateTrafficOnPath(int graph[MAX_NODES][MAX_NODES], const vector<int> &sho
         cout << "Enter new weight for edge (" << u << " -> " << v << ") (-1 to block the road): ";
         cin >> newWeight;
         graph[u][v] = newWeight;
-        graph[v][u] = newWeight; 
+        graph[v][u] = newWeight;
         cout << "Updated weight for edge (" << u << " -> " << v << ") is now " << newWeight << ".\n";
     }
 }
 
 int main() {
     int graph[MAX_NODES][MAX_NODES] = {
-        {0, 10, 5, -1, 2},  
-        {10, 0, 2, 1, -1}, 
-        {5, 2, 0, 9, 2},    
-        {-1, 1, 9, 0, 4},   
-        {2, -1, 2, 4, 0},  
-        
+        {0, 10, 5, -1, 2},
+        {10, 0, 2, 1, -1},
+        {5, 2, 0, 9, 2},
+        {-1, 1, 9, 0, 4},
+        {2, -1, 2, 4, 0},
+
     };
 
     int startNode, endNode;
