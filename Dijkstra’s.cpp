@@ -28,8 +28,8 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string
         }
 
         for (int i = 0; i < n; i++) {
-            if (graph[currentNode][i] != -1) { 
-                int newDist = currentDistance + graph[currentNode][i]; 
+            if (graph[currentNode][i] != -1) {
+                int newDist = currentDistance + graph[currentNode][i];
                 if (newDist < distance[i]) {
                     distance[i] = newDist;
                     previous[i] = currentNode;
@@ -43,7 +43,7 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string
     if (distance[end] == INT_MAX) {
         cout << "No path found.\n";
     } else {
-        cout << "Total time: " << distance[end] << " minutes\n";
+        cout << "Total distance " << distance[end] << " kilometers\n";
         cout << "Path: ";
         vector<int> path;
         for (int at = end; at != -1; at = previous[at]) {
@@ -59,22 +59,22 @@ void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string
 
 int main() {
     int graph[MAX_NODES][MAX_NODES] = {
-        {0, 10, 5, -1, 2}, 
-        {10, 0, 2, 1, -1},  
-        {5, 2, 0, 9, 2},    
-        {-1, 1, 9, 0, 4},  
-        {2, -1, 2, 4, 0},  
+        {0, 10, 5, -1, 2},
+        {10, 0, 2, 1, -1},
+        {5, 2, 0, 9, 2},
+        {-1, 1, 9, 0, 4},
+        {2, -1, 2, 4, 0},
     };
 
     string places[MAX_NODES] = {
         "City Center",
         "Restaurant",
-        "Intersection 2",
+        "park",
         "Hospital",
         "Highway"
     };
 
-    // Display the available places and their corresponding numbers
+
     cout << "Available places and their corresponding numbers:\n";
     for (int i = 0; i < MAX_NODES; i++) {
         cout << i << ": " << places[i] << endl;
@@ -82,7 +82,7 @@ int main() {
 
     int startNode, endNode;
 
-    // Prompt the user for the start and end intersections
+
     cout << "Enter the start intersection (0 to " << MAX_NODES - 1 << "): ";
     cin >> startNode;
     cout << "Enter the end intersection (0 to " << MAX_NODES - 1 << "): ";
