@@ -1,60 +1,52 @@
 #include <iostream>
 #include <climits>
-#include <queue>
 #include <vector>
 using namespace std;
 
 #define MAX_NODES 5
 
-void dijkstra(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string places[MAX_NODES]) {
-    int distance[MAX_NODES];
-    int previous[MAX_NODES];
-    for (int i = 0; i < n; i++) {
-        distance[i] = INT_MAX;
-        previous[i] = -1;
-    }
-    distance[start] = 0;
+void greedyShortestPath(int graph[MAX_NODES][MAX_NODES], int start, int end, int n, string places[MAX_NODES]) {
+    bool visited[MAX_NODES] = {false};
+    vector<int> path;
+    int currentNode = start;
+    int totalDistance = 0;
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, start});
+    while (currentNode != end) {
+        visited[currentNode] = true;
+        path.push_back(currentNode);
 
-    while (!pq.empty()) {
-        int currentNode = pq.top().second;
-        int currentDistance = pq.top().first;
-        pq.pop();
+        int nextNode = -1;
+        int minDistance = INT_MAX;
 
-        if (currentDistance > distance[currentNode]) {
-            continue;
-        }
-
+        // Find the closest unvisited neighbor
         for (int i = 0; i < n; i++) {
-            if (graph[currentNode][i] != -1) {
-                int newDist = currentDistance + graph[currentNode][i];
-                if (newDist < distance[i]) {
-                    distance[i] = newDist;
-                    previous[i] = currentNode;
-                    pq.push({newDist, i});
-                }
+            if (!visited[i] && graph[currentNode][i] != -1 && graph[currentNode][i] < minDistance) {
+                nextNode = i;
+                minDistance = graph[currentNode][i];
             }
         }
+
+        if (nextNode == -1) {
+            cout << "No path found from " << places[start] << " to " << places[end] << ".\n";
+            return;
+        }
+
+        totalDistance += minDistance;
+        currentNode = nextNode;
     }
 
-    cout << "Dijkstra's Algorithm: Shortest route from " << places[start] << " (" << start << ") to " << places[end] << " (" << end << ")\n";
-    if (distance[end] == INT_MAX) {
-        cout << "No path found.\n";
-    } else {
-        cout << "Total distance " << distance[end] << " kilometers\n";
-        cout << "Path: ";
-        vector<int> path;
-        for (int at = end; at != -1; at = previous[at]) {
-            path.push_back(at);
-        }
-        for (int i = path.size() - 1; i >= 0; i--) {
-            cout << places[path[i]] << " (" << path[i] << ")";
-            if (i > 0) cout << " -> ";
-        }
-        cout << endl;
+    // Add the end node to the path
+    path.push_back(end);
+
+    // Output the result
+    cout << "Greedy Algorithm: Route from " << places[start] << " to " << places[end] << "\n";
+    cout << "Total distance: " << totalDistance << " kilometers\n";
+    cout << "Path: ";
+    for (int i = 0; i < path.size(); i++) {
+        cout << places[path[i]] << " (" << path[i] << ")";
+        if (i < path.size() - 1) cout << " -> ";
     }
+    cout << endl;
 }
 
 int main() {
@@ -69,11 +61,10 @@ int main() {
     string places[MAX_NODES] = {
         "City Center",
         "Restaurant",
-        "park",
+        "Park",
         "Hospital",
         "Highway"
     };
-
 
     cout << "Available places and their corresponding numbers:\n";
     for (int i = 0; i < MAX_NODES; i++) {
@@ -82,13 +73,12 @@ int main() {
 
     int startNode, endNode;
 
-
     cout << "Enter the start intersection (0 to " << MAX_NODES - 1 << "): ";
     cin >> startNode;
     cout << "Enter the end intersection (0 to " << MAX_NODES - 1 << "): ";
     cin >> endNode;
 
-    dijkstra(graph, startNode, endNode, MAX_NODES, places);
+    greedyShortestPath(graph, startNode, endNode, MAX_NODES, places);
 
     return 0;
 }
