@@ -24,6 +24,8 @@ void bellmanFord(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][MAX_NOD
                     if (includeTraffic && traffic[u][v] != -1) {
                         effectiveWeight += traffic[u][v];
                     }
+                    // Skip blocked roads (traffic value = -1)
+                    if (traffic[u][v] == -1) continue;
                     if (distance[u] != INT_MAX && distance[u] + effectiveWeight < distance[v]) {
                         distance[v] = distance[u] + effectiveWeight;
                         previous[v] = u;
@@ -61,7 +63,7 @@ void updateTrafficOnPath(int traffic[MAX_NODES][MAX_NODES], const vector<int> &s
         cout << "Enter traffic weight for edge (" << u << " -> " << v << ") (-1 to block the road): ";
         cin >> newTraffic;
         traffic[u][v] = newTraffic;
-        traffic[v][u] = newTraffic; 
+        traffic[v][u] = newTraffic;
         cout << "Updated traffic for edge (" << u << " -> " << v << ") is now " << newTraffic << ".\n";
     }
 }
@@ -91,18 +93,15 @@ int main() {
 
     vector<int> shortestPath;
 
-    
     cout << "\nCalculating shortest path without traffic...\n";
     bellmanFord(graph, traffic, startNode, endNode, MAX_NODES, shortestPath, false);
 
-    
     char choice;
     cout << "\nDo you want to update traffic conditions for the shortest path? (y/n): ";
     cin >> choice;
     if (choice == 'y' || choice == 'Y') {
         updateTrafficOnPath(traffic, shortestPath);
 
-       
         cout << "\nRecalculating shortest path with updated traffic...\n";
         bellmanFord(graph, traffic, startNode, endNode, MAX_NODES, shortestPath, true);
     }
