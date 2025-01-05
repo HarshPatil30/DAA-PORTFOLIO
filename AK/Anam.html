@@ -1,1 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'EB Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F4EEE3;
+            color: #4A403A;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            color: #3D332E;
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+            color: #4A403A;
+        }
+
+        a {
+            color: #4A403A;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #806F65;
+        }
+
+        header {
+            background-color: #D3C6B5;
+            color: #FFFFFF;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid #B8A494;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #ECE6DA;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid #D3C6B5;
+        }
+
+        nav a {
+            margin: 0 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #3D332E;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .projects {
+            display: block;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #D3C6B5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: left;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            color: #3D332E;
+            margin-bottom: 0.5rem;
+        }
+
+        .about {
+            line-height: 2rem;
+            text-align: left;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+        }
+
+        .about-detail {
+            margin: 0.5rem 0;
+        }
+
+        .about-detail span {
+            font-weight: bold;
+            color: #3D332E;
+        }
+
+        .about-summary {
+            margin-top: 2rem;
+            font-style: italic;
+            color: #4A403A;
+            text-align: left;
+        }
+
+        .find-me {
+            text-align: center;
+        }
+
+        .find-me ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .find-me ul li {
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .find-me ul li a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #3D332E;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: background 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .find-me ul li a:hover {
+            background: #806F65;
+        }
+
+        footer {
+            background-color: #3D332E;
+            color: #c98e20;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer span {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #c98e20;
+        }
+
+        footer a {
+            color: #EFE9E1;
+        }
+
+        footer a:hover {
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Portfolio</h1>
+    </header>
+
+    <nav>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#find-me">Find Me Online</a>
+    </nav>
+
+    <section id="projects">
+        <div class="container">
+            <h2>💡 Projects</h2>
+            <div class="projects">
+                <div class="card">
+                    <h3>Wire Cutting Machine</h3>
+                    <p>An Arduino-based automation system for precision wire cutting.</p>
+                </div>
+                <div class="card">
+                    <h3>Water Lifting Without Electricity</h3>
+                    <p>A renewable and sustainable water lifting mechanism.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>💻 Skills</h2>
+            <div class="skills">
+                <div class="card">
+                    <p>C, C++, Python, SQL, Data Structures & Algorithms, Arduino, Autodes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>👤 About</h2>
+            <div class="about">
+                <div class="card">
+                    <p class="about-detail"><span>Name:</span> Anam Khan</p>
+                    <p class="about-detail"><span>Roll Number:</span> 201</p>
+                    <p class="about-detail"><span>Subject:</span> Design and Analysis of Algorithms</p>
+                </div>
+                <p class="about-summary">I am a curious learner driven to gain knowledge and experience, constantly striving to improve and contribute to growth.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="find-me">
+        <div class="container">
+            <h2>🔗 Find Me Online</h2>
+            <div class="card">
+                <ul style="list-style-type: none; padding: 0;">
+                    <li><a href="https://github.com/Anam-khann" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+    <p style="color:#D3C6B5;">© AK</p> 
+  </footer>
+  
+</body>
+</html>
 
