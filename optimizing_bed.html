@@ -6,35 +6,187 @@
     <title>Optimizing Hospital Bed Allocation</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Global Styles */
         body {
             font-family: 'Space Grotesk', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #151f32;
+            color: #e2e8f0;
+            overflow-x: hidden;
         }
+
+        /* Header */
         header {
             text-align: center;
-            padding: 20px;
-            background-color: #007BFF;
+            padding: 50px;
+            background-color: #1e293b;
             color: white;
+            animation: fadeInDown 1s ease-out;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
         header h1 {
             margin: 0;
+            font-size: 2rem; /* Adjusted to make the header fit in a single row */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease-in-out;
         }
+
+        header:hover h1 {
+            color: #3b82f6; /* Dynamic font color change on hover */
+        }
+
+        header:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container */
         .container {
             width: 90%;
-            margin: auto;
+            max-width: 1200px;
+            margin: 2rem auto;
             padding: 2rem;
+            animation: slideInUp 1s ease-out;
         }
+
         h2 {
-            color: #007BFF;
+            color: #3b82f6;
             font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .intro {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .intro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .intro h3 {
+            color: #38bdf8;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Use Case Block */
+        .use-case {
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            color: white; /* Use case text color set to white */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .use-case:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .use-case h3 {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .use-case p {
+            line-height: 1.8;
             margin-bottom: 1rem;
         }
-        p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
+
+        /* Task, SDG, and Tool Colors */
+        .task {
+            color: #f8fafc; /* Shade of white */
+            font-weight: 600;
+        }
+
+        .sdg, .tool {
+            color: white; /* White */
+            font-weight: 600;
+            transition: color 0.3s, transform 0.2s ease-in-out;
+        }
+
+        .sdg:hover, .tool:hover {
+            color: #38bdf8; /* Light blue on hover */
+            transform: translateY(-2px);
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        .implementation-btn {
+            background-color: #38bdf8;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .implementation-btn:hover {
+            background-color: #0ea5e9;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem; /* Smaller font size for mobile */
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .implementation-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -44,8 +196,9 @@
     </header>
 
     <main class="container">
-        <section>
-            <h2>Introduction</h2>
+        <!-- Introduction Section -->
+        <div class="intro">
+            <h3>Introduction</h3>
             <p>
                 Efficient hospital bed management is critical to ensuring timely and adequate healthcare for patients. 
                 In hospitals with fluctuating patient numbers and varying levels of care required, managing available beds 
@@ -53,11 +206,67 @@
                 that streamlines hospital bed availability tracking, patient prioritization, bed reservation, and inter-hospital 
                 coordination, ensuring that resources are used optimally.
             </p>
+        </div>
+
+        <!-- Use Cases Section -->
+        <h2>Use Cases</h2>
+
+        <div class="use-case">
+            <h3>1. Bed Availability and Management</h3>
+            <p><span class="task"><strong>Task:</strong></span> To track hospital bed availability in different hospitals, update occupancy, and support patient admissions and transfers.</p>
+            <p><span class="sdg"><strong>SDG:</strong></span> 3</p>
+            <p><span class="tool"><strong>Problem Tool Used:</strong></span> Hash Map Data Structure</p>
             <p>
-                Below, we decompose the business case into smaller use cases, each targeting a specific aspect of hospital 
-                bed management.
+                This use case provides the ability to query available beds for specific hospital departments and assists in identifying 
+                hospitals with available beds of a certain type, facilitating patient transfers or admissions when necessary.
             </p>
-        </section>
+            <div class="button-container">
+                <a href="implementation-bed-availability.html" class="implementation-btn">View Implementation</a>
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>2. Bed Allocation</h3>
+            <p><span class="task"><strong>Task:</strong></span> To manage bed availability, prioritize patients using a queue, and allocate beds to the highest priority patients first.</p>
+            <p><span class="sdg"><strong>SDG:</strong></span> 3</p>
+            <p><span class="tool"><strong>Problem Tool Used:</strong></span> Priority Queue and Hash Map</p>
+            <p>
+                The Bed Allocation System aims to allocate hospital beds to patients based on their priority level (High, Medium, Low) 
+                and available capacity in different departments (e.g., ICU, General, Emergency).
+            </p>
+            <div class="button-container">
+                <a href="implementation-bed-allocation.html" class="implementation-btn">View Implementation</a>
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>3. Bed Reservation</h3>
+            <p><span class="task"><strong>Task:</strong></span> To reserve beds for patients, cancel reservations, and display current bed availability and reservations.</p>
+            <p><span class="sdg"><strong>SDG:</strong></span> 3 & 9</p>
+            <p><span class="tool"><strong>Problem Tool Used:</strong></span> Segment Tree, Fenwick Tree</p>
+            <p>
+                This module focuses on managing bed reservations, allowing hospitals to handle bed requests dynamically while maintaining up-to-date availability and reservation data.
+            </p>
+            <div class="button-container">
+                <a href="implementation-bed-reservation.html" class="implementation-btn">View Implementation</a>
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>4. Inter-Hospital Coordination</h3>
+            <p><span class="task"><strong>Task:</strong></span> To identify the nearest hospital from a given source hospital.</p>
+            <p><span class="sdg"><strong>SDG:</strong></span> 3, 9, 10, 17</p>
+            <p><span class="tool"><strong>Problem Tool Used:</strong></span> Dijkstra’s Algorithm, Floyd-Warshall Algorithm</p>
+            <p>
+                This module focuses on coordinating resources across multiple hospitals, ensuring efficient transfer of patients 
+                between hospitals when a specific hospital does not have the necessary resources. By identifying the nearest 
+                hospitals, the system supports faster patient transfers and improved emergency response.
+            </p>
+            <div class="button-container">
+                <a href="implementation-inter-hospital-coordination.html" class="implementation-btn">View Implementation</a>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>
