@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Healthcare Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #151f32;
+            color: #fff;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e293b;
+            color: white;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            transition: color 0.3s;
+        }
+        header h1:hover {
+            color: #38bdf8;
+        }
+        .subheading {
+            font-size: 2rem;
+            color: #38bdf8;
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 2rem;
+            margin-top: 50px;
+        }
+        h2, h3 {
+            color: #38bdf8;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-size: 1.7rem;
+            margin-top: 1.5rem;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .main-block {
+            background-color: #1e293b;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        .main-block:hover {
+            transform: scale(1.03);
+        }
+        .subheading {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        .use-case {
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .use-case span {
+            font-weight: bold;
+        }
+        .inner-block {
+            background-color: #151f32;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .inner-block:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Predictive Healthcare Analytics</h1>
+    </header>
+
+    <div class="subheading">
+        <p>Advanced Algorithms:</p>
+    </div>
+
+    <main class="container">
+        <section class="main-block">
+            <h3>String Matching Algorithms</h3>
+            <p>
+                String Matching Algorithms can play a crucial role, especially in processing patient records, treatment protocols, and other textual data.
+            </p>
+            <div class="inner-block">
+                <h4 class="subheading">Brute Force String Matching Algorithm</h4>
+                <p class="use-case"><span>Use case in Healthcare Analytics:</span> Extracting specific treatment protocols, disease names, or patient symptoms from unstructured text data (like clinical notes or research papers).</p>
+            </div>
+            <div class="inner-block">
+                <h4 class="subheading">Boyer-Moore String Matching Algorithm</h4>
+                <p class="use-case"><span>Use case in Healthcare Analytics:</span> Efficient searching within electronic health records (EHR) or clinical databases to quickly locate relevant information, such as medication dosages, disease names, or medical terms.</p>
+            </div>
+        </section>
+
+        <section class="main-block">
+            <h3>Kruskal’s Algorithm</h3>
+            <p>
+                To determine the most efficient way to connect multiple hospitals, healthcare centres, or clinics in a given area so that resources, such as medical staff, equipment, and ambulances, can be shared or redistributed effectively.
+            </p>
+            <p>
+                Kruskal’s algorithm is ideally suited for solving Minimum Spanning Tree (MST) problems, where the goal is to minimize the total cost (whether it’s transportation costs, connection costs, or time delays) while ensuring that every hospital is connected in the network.
+            </p>
+        </section>
+
+        <section class="main-block">
+            <h3>BFS (Breadth-First Search)</h3>
+            <p>
+                BFS can be used to model the spread of contagious diseases through a population or across hospitals.
+            </p>
+            <p>
+                The goal is to simulate how an infection spreads from one individual or hospital to others, taking into account the social/physical proximity or connections between them. This helps in predicting infection patterns, healthcare resource needs, and the spread over time.
+            </p>
+        </section>
+
+        <section class="main-block">
+            <h3>Skip List</h3>
+            <p>
+                Skip List is used for efficient searching and inserting in an ordered sequence with logarithmic time complexity.
+            </p>
+            <p>
+                <span class="subheading">Use Case in Healthcare Analytics:</span> Skip lists can be used for storing and querying time-series data (e.g., patient vitals over time) in a manner that supports fast updates and lookups.
+            </p>
+        </section>
+    </main>
+</body>
+</html>
