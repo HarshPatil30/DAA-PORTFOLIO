@@ -1,0 +1,249 @@
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG Contributions in Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #151f32;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 50px;
+            background-color: #1e293b;
+            color: white;
+            animation: fadeInDown 1s ease-out;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header:hover h1 {
+            color: #3b82f6;
+        }
+
+        header:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            animation: slideInUp 1s ease-out;
+        }
+
+        h2 {
+            color: #3b82f6;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .intro {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .intro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .intro h3 {
+            color: #38bdf8;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Use Case Block */
+        .use-case {
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .use-case:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .use-case h3 {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .use-case p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Task, SDG, and Tool Colors */
+        .task {
+            color: #f8fafc;
+            font-weight: 600;
+        }
+
+        .sdg, .tool {
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.2s ease-in-out;
+        }
+
+        .sdg:hover, .tool:hover {
+            color: #38bdf8;
+            transform: translateY(-2px);
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        .implementation-btn {
+            background-color: #38bdf8;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .implementation-btn:hover {
+            background-color: #0ea5e9;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .implementation-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SDG Contributions in Healthcare</h1>
+    </header>
+
+    <main class="container">
+
+        <!-- SDG 3 Block -->
+        <div class="use-case">
+            <h3> SDG 3: Good Health and Well-being</h3>
+            <p><strong>Explanation:</strong> This goal is central to all the use cases as they directly contribute to improving healthcare delivery, patient management, and resource allocation, which is vital for good health outcomes. The use of technology in tracking bed availability, prioritizing patients, and coordinating inter-hospital transfers ensures better healthcare services.</p>
+            <p><strong>Relevant Indicators:</strong></p>
+            <ul>
+                <li>Indicator 3.8.1: Coverage of essential health services.</li>
+                <li>Indicator 3.9.1: Mortality rate attributed to chronic diseases (e.g., cardiovascular diseases, cancer).</li>
+                <li>Indicator 3.3.1: Number of new HIV infections per 1,000 uninfected population.</li>
+                <li>Indicator 3.9.2: Mortality rate attributed to unintentional poisoning.</li>
+            </ul>
+        </div>
+
+        <!-- SDG 9 Block -->
+        <div class="use-case">
+            <h3>SDG 9: Industry, Innovation, and Infrastructure</h3>
+            <p><strong>Explanation:</strong> These use cases promote the optimization of healthcare infrastructure and encourage the use of innovative technologies like algorithms and data structures for efficient hospital operations. Technologies like Dijkstra’s Algorithm for hospital coordination and predictive analytics models for disease forecasting are examples of innovation being utilized to improve healthcare systems.</p>
+            <p><strong>Relevant Indicators:</strong></p>
+            <ul>
+                <li>Indicator 9.1.1: Proportion of rural population with access to all-season roads (indirectly related to hospital access and infrastructure).</li>
+                <li>Indicator 9.4.1: CO2 emissions per unit of value added (relevant for reducing the carbon footprint of hospital operations through technological solutions).</li>
+                <li>Indicator 9.b.1: Proportion of individuals using the internet to access health services.</li>
+            </ul>
+        </div>
+
+        <!-- SDG 10 Block -->
+        <div class="use-case">
+            <h3>SDG 10: Reduced Inequalities</h3>
+            <p><strong>Explanation:</strong> Ensuring equal access to healthcare resources is a critical part of these use cases. The algorithms that prioritize patients and allocate beds based on urgency aim to ensure that everyone, regardless of their background, receives timely medical attention. Coordinating resources across hospitals ensures equitable access for rural or underserved populations.</p>
+            <p><strong>Relevant Indicators:</strong></p>
+            <ul>
+                <li>Indicator 10.2.1: Proportion of people living below 50% of median income.</li>
+                <li>Indicator 10.3.1: Proportion of countries that have implemented a law, policy, or program to ensure equal access to public services.</li>
+                <li>Indicator 10.7.1: Recruitment of migrants into employment opportunities, including health-related jobs, fostering better healthcare delivery.</li>
+            </ul>
+        </div>
+
+        <!-- SDG 17 Block -->
+        <div class="use-case">
+            <h3>SDG 17: Partnerships for the Goals</h3>
+            <p><strong>Explanation:</strong> Encouraging partnerships between healthcare institutions fosters collaboration, leading to improved healthcare systems. By sharing resources, knowledge, and expertise, hospitals can better address critical challenges, enhance service delivery, and ensure resilience in healthcare systems.</p>
+            <p><strong>Relevant Indicators:</strong></p>
+            <ul>
+                <li>Indicator 17.16.1: Number of countries reporting progress in multi-stakeholder development effectiveness monitoring frameworks.</li>
+                <li>Indicator 17.17.1: Amount of dollars committed to public-private and civil society partnerships.</li>
+                <li>Indicator 17.18.1: Proportion of sustainable development indicators produced at the national level with full disaggregation.</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
