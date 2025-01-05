@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #375F45, #273631);
+            color: #ffffff;
+        }
+
+        h1, h2 {
+            color: #C5E1B2;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: #C5E1B2;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #C5E1B2;
+            margin: 10px 0;
+        }
+
+        section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        section h2 {
+            margin-top: 0;
+        }
+
+        /* About Section */
+        .about {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #C5E1B2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        /* Skills Section */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .skills-list span {
+            background: #5E8C62;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .skills-list span:hover {
+            background: #375F45;
+            transform: translateY(-3px);
+        }
+
+        /* Projects Section */
+        .projects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .project-card {
+            flex: 1 1 calc(45% - 20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #C5E1B2;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .project-card h3 {
+            color: #C5E1B2;
+        }
+
+        /* Find Me Section */
+        .social-links {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            font-size: 22px;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            background: #5E8C62;
+            transition: background 0.3s, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #375F45;
+            transform: scale(1.1);
+        }
+
+        /* Icon size */
+        .social-links i {
+            font-size: 24px;
+        }
+
+        /* Animation */
+        section {
+            animation: fadeIn 1.2s ease-in, slideUp 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-card {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Footer Text */
+        .footer-text {
+            font-size: 12px;
+            color: #C5E1B2;
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 20px;
+        }
+    </style>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Udita Banchhode</h1>
+            <p>Engineering student</p>
+        </div>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="about">
+                <img src="https://via.placeholder.com/180" alt="Profile Picture">
+                <h2>About Me</h2>
+                <p>
+                    I am a passionate computer science engineering student with a deep interest in coding, technology trends, and solving challenging problems. My journey is fueled by a drive to innovate and learn.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-list">
+                <span>C/C++</span>
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>Problem Solving</span>
+                <span>Data Structures</span>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects-list">
+                <div class="project-card">
+                    <h3>DTSI</h3>
+                    <p>Empowered Government School with mentorship in technology, academics, and careers.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Engineering Exploration</h3>
+                    <p>Built a Surveillance Bot.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Find Me Section -->
+        <section id="find-me">
+            <h2>Find Me</h2>
+            <div class="social-links">
+                <a href="https://github.com/Udita-B" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/udita-banchhode-0426742a5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+                
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-text">
+        <p>Course Name: Algorithmic Problem Solving</p>
+        <p>Course Code: 24ECSC205</p>
+        <p>Name: Udita Banchhode</p>
+        <p>SRN: 01FE23BCS095</p>
+        <p>Course Instructor: Ms. Vijayalakshmi S</p>
+        <p>University: KLE Technological University</p>
+    </div>
+</body>
+</html>
