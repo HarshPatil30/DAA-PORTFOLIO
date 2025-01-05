@@ -244,7 +244,7 @@ int main() {
     int choice;
     do {
         std::cout << "\nSelf-Scheduling Appointments \n";
-        std::cout << "1. Place Appointment\n";
+        std::cout << "1. Book Appointment\n";
         std::cout << "2. Print All Appointments\n";
         std::cout << "3. Exit\n";
         std::cout << "Enter your choice: ";
