@@ -4,82 +4,370 @@
 #include <queue>
 #include <algorithm>
 #include<ctime>
-using namespace std;
+#include <unordered_map>
+#include <string>
+#include <functional>
 
+
+using namespace std;
+#define INF std::numeric_limits<int>::max()
 #define MAX_NODES 5
 #define MAX_INTERSECTIONS 5
+
+enum class PatientPriority {
+    High,  
+    Medium, 
+    Low    
+};
+
+
+struct Edge1 {
+    int destination;
+    int weight;
+};
+
+
+class Graph1 {
+private:
+    unordered_map<int, vector<Edge1>> adjList;
+
+public:
+    void addEdge1(int u, int v, int weight) {
+        adjList[u].push_back({v, weight});
+        adjList[v].push_back({u, weight}); 
+    }
+
+    vector<int> dijkstra(int source, int numHospitals) {
+        std::priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+        vector<int> distances(numHospitals + 1, INF);
+        distances[source] = 0;
+        pq.push({0, source}); /
+
+        while (!pq.empty()) {
+            int currentDistance = pq.top().first;
+            int currentNode = pq.top().second;
+            pq.pop();
+
+            if (currentDistance > distances[currentNode]) continue;
+
+            for (const Edge1& Edge1 : adjList[currentNode]) {
+                int neighbor = Edge1.destination;
+                int weight = Edge1.weight;
+
+                if (distances[currentNode] + weight < distances[neighbor]) {
+                    distances[neighbor] = distances[currentNode] + weight;
+                    pq.push({distances[neighbor], neighbor});
+                }
+            }
+        }
+
+        return distances;
+    }
+
+    void displayShortestPaths(int source, const vector<int>& distances) {
+        cout << "Shortest paths from Hospital " << source << ":\n";
+        for (int i = 1; i < distances.size(); i++) {
+            cout << "Hospital " << i << ": " << (distances[i] == INF ? "No path" : to_string(distances[i])) << "\n";
+        }
+    }
+};
+
+// Bed Availability Tracker
+class BedAvailabilityTracker {
+private:
+    unordered_map<int, unordered_map<string, int>> hospitalBeds;
+    unordered_map<int, unordered_map<string, int>> reservedBeds;
+
+public:
+    void updateBedCount(int hospitalID, const string& bedType, int count) {
+        hospitalBeds[hospitalID][bedType] = count;
+        cout << "Updated: Hospital " << hospitalID << ", Bed Type: "
+                  << bedType << ", Available Beds: " << count << "\n";
+    }
+
+    int getAvailableBeds(int hospitalID, const string& bedType) {
+        if (hospitalBeds.find(hospitalID) != hospitalBeds.end() &&
+            hospitalBeds[hospitalID].find(bedType) != hospitalBeds[hospitalID].end()) {
+            return hospitalBeds[hospitalID][bedType] - reservedBeds[hospitalID][bedType];
+        }
+        return 0;
+    }
+
+    void reserveBed(int hospitalID, const string& bedType) {
+        int availableBeds = getAvailableBeds(hospitalID, bedType);
+        if (availableBeds > 0) {
+            reservedBeds[hospitalID][bedType]++;
+            cout << "Bed reserved in Hospital " << hospitalID << " (" << bedType << ").\n";
+        } else {
+            cout << "No available " << bedType << " beds in Hospital " << hospitalID << ".\n";
+        }
+    }
+
+    void displayAllBeds() {
+        cout << "\nHospital Bed Availability:\n";
+        for (const auto& [hospitalID, beds] : hospitalBeds) {
+            cout << "Hospital " << hospitalID << ":\n";
+            for (const auto& [bedType, count] : beds) {
+                int availableBeds = count - reservedBeds[hospitalID][bedType];
+                cout << "  " << bedType << ": " << availableBeds << " beds available\n";
+            }
+        }
+    }
+};
+
+
+class Patient {
+public:
+    int patientID;
+    string name;
+    PatientPriority priority;
+
+    Patient(int id, const string& name, PatientPriority priority)
+        : patientID(id), name(name), priority(priority) {}
+
+    bool operator<(const Patient& other) const {
+        return priority < other.priority; 
+    }
+};
+
+
+class PatientPriorityQueue {
+private:
+    priority_queue<Patient> pq;
+
+public:
+    void addPatient(int id, const string& name, PatientPriority priority) {
+        Patient p(id, name, priority);
+        pq.push(p);
+         cout<<"Patient added successfully.\n";
+    }
+
+    Patient getNextPatient() {
+        if (!pq.empty()) {
+            Patient p = pq.top();
+            pq.pop();
+            return p;
+        }
+        return Patient(-1, "No Patient", PatientPriority::Low);
+    }
+
+    bool hasPatients() {
+        return !pq.empty();
+    }
+};
+
+
+class BedAllocationSystem {
+private:
+    BedAvailabilityTracker& bedTracker;
+    PatientPriorityQueue& patientQueue;
+
+public:
+    BedAllocationSystem(BedAvailabilityTracker& bedTracker, PatientPriorityQueue& patientQueue)
+        : bedTracker(bedTracker), patientQueue(patientQueue) {}
+
+    void allocateBed(int hospitalID, const string& bedType) {
+        if (!patientQueue.hasPatients()) {
+            cout << "No patients in the queue.\n";
+            return;
+        }
+
+        Patient p = patientQueue.getNextPatient();
+        int availableBeds = bedTracker.getAvailableBeds(hospitalID, bedType);
+
+        if (availableBeds > 0) {
+            bedTracker.reserveBed(hospitalID, bedType);
+            cout << "Allocated Bed to Patient " << p.name << " (ID: " << p.patientID << ") in Hospital "
+                      << hospitalID << " (" << bedType << ").\n";
+        } else {
+            cout << "No available " << bedType << " beds in Hospital " << hospitalID << " for Patient "
+                      << p.name << " (ID: " << p.patientID << ").\n";
+        }
+    }
+};
+
+
+void hospitalManagementSystem() {
+    BedAvailabilityTracker bedTracker;
+    PatientPriorityQueue patientQueue;
+    BedAllocationSystem allocationSystem(bedTracker, patientQueue);
+    Graph1 Graph1;
+    int numHospitals = 5;
+
+    Graph1.addEdge1(1, 2, 3);
+    Graph1.addEdge1(1, 3, 1);
+    Graph1.addEdge1(2, 4, 2);
+    Graph1.addEdge1(3, 4, 4);
+    Graph1.addEdge1(4, 5, 1);
+
+    int choice;
+    do {
+        cout << "\n--- Hospital Bed Management System ---\n";
+        cout << "1. Update Bed Count\n";
+        cout << "2. Add Patient to Priority Queue\n";
+        cout << "3. Allocate Bed to Patient\n";
+        cout << "4. Reserve Bed for Patient\n";
+        cout << "5. Query Available Beds\n";
+        cout << "6. Display All Bed Availability\n";
+        cout << "7. Display Shortest Paths Between Hospitals\n";
+        cout << "8. Back to Main Menu\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1: {
+            int hospitalID, count;
+            string bedType;
+            cout << "Enter Hospital ID: ";
+            cin >> hospitalID;
+            cout << "Enter Bed Type: ";
+            cin >> bedType;
+            cout << "Enter Number of Beds: ";
+            cin >> count;
+            bedTracker.updateBedCount(hospitalID, bedType, count);
+            break;
+        }
+        case 2: {
+            int patientID;
+            string name, priorityStr;
+            PatientPriority priority;
+
+            cout << "Enter Patient ID: ";
+            cin >> patientID;
+            cout << "Enter Patient Name: ";
+            cin >> name;
+            cout << "Enter Patient Priority (High/Medium/Low): ";
+            cin >> priorityStr;
+
+            if (priorityStr == "High") priority = PatientPriority::High;
+            else if (priorityStr == "Medium") priority = PatientPriority::Medium;
+            else priority = PatientPriority::Low;
+
+            patientQueue.addPatient(patientID, name, priority);
+            break;
+        }
+        case 3: {
+            int hospitalID;
+            string bedType;
+            cout << "Enter Hospital ID: ";
+            cin >> hospitalID;
+            cout << "Enter Bed Type: ";
+            cin >> bedType;
+            allocationSystem.allocateBed(hospitalID, bedType);
+            break;
+        }
+        case 4: {
+            int hospitalID;
+            string bedType;
+            cout << "Enter Hospital ID: ";
+            cin >> hospitalID;
+            cout << "Enter Bed Type: ";
+            cin >> bedType;
+            bedTracker.reserveBed(hospitalID, bedType);
+            break;
+        }
+        case 5: {
+            int hospitalID;
+            string bedType;
+            cout << "Enter Hospital ID: ";
+            cin >> hospitalID;
+            cout << "Enter Bed Type: ";
+            cin >> bedType;
+            int availableBeds = bedTracker.getAvailableBeds(hospitalID, bedType);
+            cout << "Available " << bedType << " beds in Hospital " << hospitalID << ": " << availableBeds << "\n";
+            break;
+        }
+        case 6:
+            bedTracker.displayAllBeds();
+            break;
+        case 7: {
+            int source;
+            cout << "Enter Source Hospital: ";
+            cin >> source;
+            vector<int> distances = Graph1.dijkstra(source, numHospitals);
+            Graph1.displayShortestPaths(source, distances);
+            break;
+        }
+        case 8:
+            cout << "Returning to Main Menu.\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 8);
+}
 struct Supply {
-    std::string name;
+    string name;
     int quantity;
     double cost, storageSpaceRequired;
-    std::string storageLocation;
+    string storageLocation;
 
     bool operator<(const Supply& other) const {
         return quantity < other.quantity;
     }
 };
 
-void displayStorage(const std::vector<Supply>& supplies) {
-    std::cout << "\nCurrent Storage:\n";
+void displayStorage(const vector<Supply>& supplies) {
+    cout << "\nCurrent Storage:\n";
     for (const auto& supply : supplies) {
-        std::cout << "Item: " << supply.name << ", Qty: " << supply.quantity
+        cout << "Item: " << supply.name << ", Qty: " << supply.quantity
                   << ", Cost: INR " << (supply.cost * 80) << ", Location: " << supply.storageLocation
                   << ", Space: " << supply.storageSpaceRequired << " ft^2\n";
     }
 }
 
-void optimizeStorage(std::vector<Supply>& supplies) {
-    std::sort(supplies.begin(), supplies.end());
-    std::cout << "\nOptimized Storage (sorted by quantity):\n";
+void optimizeStorage(vector<Supply>& supplies) {
+    sort(supplies.begin(), supplies.end());
+    cout << "\nOptimized Storage (sorted by quantity):\n";
     displayStorage(supplies);
 }
 
-void checkStorageCapacity(const std::vector<Supply>& supplies, double totalCapacity) {
+void checkStorageCapacity(const vector<Supply>& supplies, double totalCapacity) {
     double usedCapacity = 0;
     for (const auto& supply : supplies) {
         usedCapacity += supply.storageSpaceRequired;
     }
-    std::cout << (usedCapacity > totalCapacity ? "Capacity exceeded!" : "Storage OK.")
+    cout << (usedCapacity > totalCapacity ? "Capacity exceeded!" : "Storage OK.")
               << " Used: " << usedCapacity << " ft^2\n";
 }
 
-void addItem(std::vector<Supply>& storage) {
+void addItem(vector<Supply>& storage) {
     Supply newItem;
-    std::cout << "\nEnter item details:\n";
-    std::cout << "Name: ";
-    std::cin >> newItem.name;
-    std::cout << "Quantity: ";
-    std::cin >> newItem.quantity;
-    std::cout << "Cost per unit: ";
-    std::cin >> newItem.cost;
-    std::cout << "Storage space required (in square feet): ";
-    std::cin >> newItem.storageSpaceRequired;
-    std::cout << "Storage location: ";
-    std::cin >> newItem.storageLocation;
+    cout << "\nEnter item details:\n";
+    cout << "Name: ";
+    cin >> newItem.name;
+    cout << "Quantity: ";
+    cin >> newItem.quantity;
+    cout << "Cost per unit: ";
+    cin >> newItem.cost;
+    cout << "Storage space required (in square feet): ";
+    cin >> newItem.storageSpaceRequired;
+    cout << "Storage location: ";
+    cin >> newItem.storageLocation;
 
     storage.push_back(newItem);
-    std::cout << "Item added successfully!\n";
+    cout << "Item added successfully!\n";
 }
 
-void removeItem(std::vector<Supply>& storage) {
-    std::string itemName;
-    std::cout << "\nEnter the name of the item to remove: ";
-    std::cin >> itemName;
+void removeItem(vector<Supply>& storage) {
+    string itemName;
+    cout << "\nEnter the name of the item to remove: ";
+    cin >> itemName;
 
-    auto it = std::remove_if(storage.begin(), storage.end(), [&itemName](const Supply& supply) {
+    auto it = remove_if(storage.begin(), storage.end(), [&itemName](const Supply& supply) {
         return supply.name == itemName;
     });
 
     if (it != storage.end()) {
         storage.erase(it, storage.end());
-        std::cout << "Item removed successfully!\n";
+        cout << "Item removed successfully!\n";
     } else {
-        std::cout << "Item not found.\n";
+        cout << "Item not found.\n";
     }
 }
 
 void storageMenu() {
-    std::vector<Supply> storage = {
+    vector<Supply> storage = {
         {"Bandages", 50, 1.5, 5.0, "Shelf A1"},
         {"Gloves", 200, 0.5, 4.0, "Shelf B2"},
         {"Masks", 100, 2.0, 6.0, "Shelf C3"},
@@ -90,15 +378,15 @@ void storageMenu() {
     double totalCapacity = 30.0;
 
     do {
-        std::cout << "\n\nStorage Management System Menu:\n";
-        std::cout << "1. Display Storage\n";
-        std::cout << "2. Optimize Storage\n";
-        std::cout << "3. Check Storage Capacity\n";
-        std::cout << "4. Add Item\n";
-        std::cout << "5. Remove Item\n";
-        std::cout << "6. Exit\n";
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
+        cout << "\n\nStorage Management System Menu:\n";
+        cout << "1. Display Storage\n";
+        cout << "2. Optimize Storage\n";
+        cout << "3. Check Storage Capacity\n";
+        cout << "4. Add Item\n";
+        cout << "5. Remove Item\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
         switch (choice) {
             case 1:
@@ -117,10 +405,10 @@ void storageMenu() {
                 removeItem(storage);
                 break;
             case 6:
-                std::cout << "Exiting Storage Management System...\n";
+                cout << "Exiting Storage Management System...\n";
                 break;
             default:
-                std::cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid choice. Please try again.\n";
         }
     } while (choice != 6);
 }
@@ -209,7 +497,7 @@ struct Edge {
 };
 
 struct Hospital {
-    std::string name;
+    string name;
     int id;
 };
 
@@ -223,10 +511,10 @@ public:
     }
 
     // Dijkstra's Algorithm
-    std::vector<double> dijkstra(int start) {
-        std::vector<double> distances(adjList.size(), INT_MAX);
+    vector<double> dijkstra(int start) {
+        vector<double> distances(adjList.size(), INT_MAX);
         distances[start] = 0;
-        std::vector<bool> visited(adjList.size(), false);
+        vector<bool> visited(adjList.size(), false);
 
         for (size_t i = 0; i < adjList.size(); ++i) {
             int u = -1;
@@ -255,65 +543,65 @@ public:
     }
 
 private:
-    std::vector<std::vector<Edge>> adjList;
+    vector<vector<Edge>> adjList;
 };
 
-void displayHospitals(const std::vector<Hospital>& hospitals) {
-    std::cout << "Hospitals List (ID - Name):\n";
+void displayHospitals(const vector<Hospital>& hospitals) {
+    cout << "Hospitals List (ID - Name):\n";
     for (const auto& hospital : hospitals) {
-        std::cout << hospital.id + 1 << " - " << hospital.name << "\n"; // Display 1-based index
+        cout << hospital.id + 1 << " - " << hospital.name << "\n"; // Display 1-based index
     }
 }
 
-void findShortestPaths(Graph& graph, const std::vector<Hospital>& hospitals, int warehouse) {
-    std::vector<double> shortestPaths = graph.dijkstra(warehouse);
+void findShortestPaths(Graph& graph, const vector<Hospital>& hospitals, int warehouse) {
+    vector<double> shortestPaths = graph.dijkstra(warehouse);
 
-    std::cout << "\nShortest paths from warehouse (" << hospitals[warehouse].name << "):\n";
+    cout << "\nShortest paths from warehouse (" << hospitals[warehouse].name << "):\n";
     for (int i = 0; i < 5; ++i) {
-        std::cout << "Distance to " << hospitals[i].name << ": " << shortestPaths[i] << " km\n";
+        cout << "Distance to " << hospitals[i].name << ": " << shortestPaths[i] << " km\n";
     }
 }
 
-void findOptimalRoute(Graph& graph, const std::vector<Hospital>& hospitals, int warehouse) {
+void findOptimalRoute(Graph& graph, const vector<Hospital>& hospitals, int warehouse) {
     // Get user input for supply requests
     int requestCount;
-    std::cout << "\nEnter number of hospitals with supply requests: ";
-    std::cin >> requestCount;
+    cout << "\nEnter number of hospitals with supply requests: ";
+    cin >> requestCount;
 
-    std::vector<int> requestedHospitals;
-    std::cout << "Enter the hospital numbers (1-based index) with supply requests:\n";
+    vector<int> requestedHospitals;
+    cout << "Enter the hospital numbers (1-based index) with supply requests:\n";
     for (int i = 0; i < requestCount; ++i) {
         int hospitalNumber;
-        std::cin >> hospitalNumber;
+        cin >> hospitalNumber;
         requestedHospitals.push_back(hospitalNumber - 1); // Adjust for 0-based index
     }
 
     // Find the shortest paths to the requested hospitals
-    std::vector<double> shortestPaths = graph.dijkstra(warehouse);
+    vector<double> shortestPaths = graph.dijkstra(warehouse);
 
-    std::vector<std::pair<std::string, double>> optimalRoute;
+    vector<pair<string, double>> optimalRoute;
     for (int hospitalId : requestedHospitals) {
         optimalRoute.push_back({hospitals[hospitalId].name, shortestPaths[hospitalId]});
     }
 
     // Sort hospitals by distance to warehouse
-    std::sort(optimalRoute.begin(), optimalRoute.end(), [](const std::pair<std::string, double>& a, const std::pair<std::string, double>& b) {
+    sort(optimalRoute.begin(), optimalRoute.end(), [](const pair<string, double>& a, const pair<string, double>& b) {
         return a.second < b.second;
     });
 
-    std::cout << "\nOptimal route covering requested hospitals:\n";
+    cout << "\nOptimal route covering requested hospitals:\n";
     double totalDistance = 0;
     for (const auto& entry : optimalRoute) {
-        std::cout << "Hospital: " << entry.first << " | Distance: " << entry.second << " km\n";
+        cout << "Hospital: " << entry.first << " | Distance: " << entry.second << " km\n";
         totalDistance += entry.second;
     }
 
-    std::cout << "\nTotal distance for optimal route: " << totalDistance << " km\n";
+    cout << "\nTotal distance for optimal route: " << totalDistance << " km\n";
 }
 
 // Main menu function
 void Distribution_menu() {
-    std::vector<Hospital> hospitals = {
+    vector<Hospital> hospitals = {
         {"Warehouse", 0},
         {"Hospital A", 1},
         {"Hospital B", 2},
@@ -333,14 +621,14 @@ void Distribution_menu() {
     int warehouse = 0;
 
     while (true) {
-        std::cout << "\n===== Main Menu =====\n";
-        std::cout << "1. Display Hospitals\n";
-        std::cout << "2. Find Shortest Paths\n";
-        std::cout << "3. Find Optimal Route\n";
-        std::cout << "4. Exit\n";
-        std::cout << "Choose an option: ";
+        cout << "\n===== Main Menu =====\n";
+        cout << "1. Display Hospitals\n";
+        cout << "2. Find Shortest Paths\n";
+        cout << "3. Find Optimal Route\n";
+        cout << "4. Exit\n";
+        cout << "Choose an option: ";
         int choice;
-        std::cin >> choice;
+        cin >> choice;
 
         switch (choice) {
             case 1:
@@ -353,10 +641,10 @@ void Distribution_menu() {
                 findOptimalRoute(graph, hospitals, warehouse);
                 break;
             case 4:
-                std::cout << "Exiting...\n";
+                cout << "Exiting...\n";
                 return;
             default:
-                std::cout << "Invalid choice! Please try again.\n";
+                cout << "Invalid choice! Please try again.\n";
         }
     }
 }
@@ -931,7 +1219,8 @@ void menuDrivenProgram(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][M
         cout<<"3.Supply Distribution optimization\n";
         cout << "4.Supplier selection\n";
         cout<<"5.Storage optimizing\n";
-        cout<<"6.Exit\n";
+        cout << "6.Hospital Bed Management System\n ";
+        cout<<"7.Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -946,6 +1235,7 @@ void menuDrivenProgram(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][M
                     cout << "4. Optimize Signal Timings (Backtracking)\n";
                     cout << "5. Optimize Signal Timings (Merge Sort)\n";
                     cout << "6. Display Congestion Level (Binary Search)\n";
+
                     cout << "7. Exit to Main Menu\n";
                     cout << "Enter your choice: ";
                     cin >> subChoice;
@@ -1045,6 +1335,11 @@ void menuDrivenProgram(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][M
                         default:
                             cout << "Invalid sub-choice. Please try again.\n";
                             break;
+                             case 8:
+            hospitalManagementSystem();
+
+            break;
+
                     }
                 } while (subChoice != 7);
             } break;
@@ -1058,7 +1353,10 @@ void menuDrivenProgram(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][M
             break;
             case 5:storageMenu();  // Call the storage management menu
                 break;
-            case 6:
+               case 6:hospitalManagementSystem();
+            break;
+
+            case 7:
                 cout << "Exiting program." << endl;
                 break;
 
@@ -1066,7 +1364,7 @@ void menuDrivenProgram(int graph[MAX_NODES][MAX_NODES], int traffic[MAX_NODES][M
                 cout << "Invalid choice. Please try again.\n";
                 break;
         }
-    } while (choice != 6);
+    } while (choice != 7);
 }
 
 int main() {
