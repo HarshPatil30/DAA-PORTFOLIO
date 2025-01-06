@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG Mapping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #151f32;
+            --accent: #94a3b8;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --highlight: #38bdf8;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            animation: slideIn 1s ease-out;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--highlight), var(--text-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--accent);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .card h3 {
+            color: var(--highlight);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+        }
+
+        .card-label {
+            color: var(--text-primary);
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="title">SDG Mapping</h1>
+                <p class="subtitle">Exploring the intersection of technology and sustainable development goals through innovative solutions and sustainable practices</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Technology SDG Mapping</h2>
+                <div class="grid">
+                    <!-- Existing SDG Mapping Cards -->
+                    <div class="card">
+                        <h3>Storage Management</h3>
+                        <div class="card-content">
+                            <p><span class="card-label">SDG:</span> Responsible Consumption and Production</p>
+                            <p><span class="card-label">Target:</span> Achieve the sustainable management and efficient use of natural resources</p>
+                            <p><span class="card-label">Indicator:</span> Resource efficiency and the efficiency of material and energy consumption</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Distribution Routing</h3>
+                        <div class="card-content">
+                            <p><span class="card-label">SDG:</span> Industry, Innovation, and Infrastructure</p>
+                            <p><span class="card-label">Target:</span> Develop quality, reliable, sustainable, and resilient infrastructure</p>
+                            <p><span class="card-label">Indicator:</span> Passenger and freight volumes, by mode of transport</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Supplier Selection and Evaluation</h3>
+                        <div class="card-content">
+                            <p><span class="card-label">SDG:</span> Decent Work and Economic Growth</p>
+                            <p><span class="card-label">Target:</span> Achieve higher levels of economic productivity through diversification, innovation, and efficiency</p>
+                            <p><span class="card-label">Indicator:</span> Annual growth rate of real GDP per employed person</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Inventory Management</h3>
+                        <div class="card-content">
+                            <p><span class="card-label">SDG:</span> Responsible Consumption and Production</p>
+                            <p><span class="card-label">Target:</span> Substantially reduce waste generation through prevention, reduction, recycling, and reuse</p>
+                            <p><span class="card-label">Indicator:</span> Waste generation rates and management practices</p>
+                        </div>
+                    </div>
+
+                    <!-- New Healthcare Equipment Allocation SDG Card -->
+                    <div class="card">
+                        <h3>Healthcare Equipment Allocation</h3>
+                        <div class="card-content">
+                            <p><span class="card-label">SDG:</span> Good Health and Well-being</p>
+                            <p><span class="card-label">Target:</span> Ensure timely allocation of medical equipment to healthcare facilities</p>
+                            <p><span class="card-label">Indicator:</span> Availability of essential healthcare equipment in hospitals and clinics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">SDG Meanings</h2>
+                <div class="grid">
+                    <!-- SDG Explanation Cards -->
+                    <div class="card">
+                        <h3>SDG 12: Responsible Consumption and Production</h3>
+                        <p class="card-content">Promotes sustainable consumption and production patterns, reducing waste and ensuring efficient resource use.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>SDG 9: Industry, Innovation, and Infrastructure</h3>
+                        <p class="card-content">Fosters innovation and builds resilient infrastructure, promoting sustainable industry and economies.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>SDG 8: Decent Work and Economic Growth</h3>
+                        <p class="card-content">Promotes inclusive and sustainable economic growth, full employment, and decent work for all.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>SDG 3: Good Health and Well-being</h3>
+                        <p class="card-content">Ensures healthy lives and promotes well-being for all at all ages, including healthcare access and prevention of diseases.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>SDG 11: Sustainable Cities and Communities</h3>
+                        <p class="card-content">Strives to make cities inclusive, safe, resilient, and sustainable, improving urban living conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
