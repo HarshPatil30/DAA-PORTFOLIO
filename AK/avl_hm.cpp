@@ -1,12 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <unordered_map>
 #include <sstream>
 #include <iomanip>
-#include <ctime>
-#include <cstdlib>
 #include <algorithm>
+
+// Self-Scheduling Appointments
 
 // Helper function to convert 12-hour time format (AM/PM) to minutes
 int convertToMinutes(const std::string& timeStr) {
@@ -40,7 +39,7 @@ std::string convertToTimeStr(int minutes) {
 
     std::stringstream timeStream;
     timeStream << std::setw(2) << std::setfill('0') << hours << ":"
-               << std::setw(2) << std::setfill('0') << mins << ampm;
+               << std::setw(2) << std::setfill('0') << mins << " " << ampm;
     return timeStream.str();
 }
 
@@ -50,7 +49,7 @@ struct Appointment {
     int endTime;    // End time in minutes
     std::string name;
     std::string providerName;
-    std::string description;  // Type of appointment (e.g., general, dental, etc.)
+    std::string description;  // Type of appointment
 
     Appointment(int start, int end, const std::string& patientName, const std::string& provider, const std::string& desc)
         : startTime(start), endTime(end), name(patientName), providerName(provider), description(desc) {}
@@ -109,17 +108,34 @@ AVLNode* leftRotate(AVLNode* x) {
     return y;
 }
 
+// Function to check if an appointment slot conflicts with an existing one
+bool isConflict(AVLNode* node, const Appointment& app) {
+    if (node == nullptr) {
+        return false;
+    }
+
+    if (app.providerName == node->appointment.providerName &&
+        app.description == node->appointment.description &&
+        !(app.endTime <= node->appointment.startTime || app.startTime >= node->appointment.endTime)) {
+        return true; // Conflict found
+    }
+
+    return isConflict(node->left, app) || isConflict(node->right, app);
+}
+
 // Function to insert an appointment into the AVL Tree
 AVLNode* insert(AVLNode* node, const Appointment& app) {
-    if (node == nullptr)
+    if (node == nullptr) {
         return new AVLNode(app);
+    }
 
-    if (app.startTime < node->appointment.startTime)
+    if (app.startTime < node->appointment.startTime) {
         node->left = insert(node->left, app);
-    else if (app.startTime > node->appointment.startTime)
+    } else if (app.startTime > node->appointment.startTime) {
         node->right = insert(node->right, app);
-    else
+    } else {
         return node; // Duplicate start time, no insertion
+    }
 
     node->height = std::max(height(node->left), height(node->right)) + 1;
 
@@ -158,90 +174,10 @@ void printAppointments(AVLNode* node) {
     printAppointments(node->right);
 }
 
-// Hash Map to track provider availability
-class ProviderAvailability {
-public:
-    std::unordered_map<std::string, std::vector<int>> providerSchedule;
-    std::unordered_map<std::string, std::vector<std::string>> providerSpecialization;
-
-    void addProvider(const std::string& providerName, const std::vector<int>& availableSlots, const std::vector<std::string>& specializations) {
-        providerSchedule[providerName] = availableSlots;
-        providerSpecialization[providerName] = specializations;
-    }
-
-    bool isAvailable(const std::string& providerName, int startTime, int endTime) {
-        if (providerSchedule.find(providerName) == providerSchedule.end()) {
-            return false;  // Provider not found
-        }
-        const auto& slots = providerSchedule[providerName];
-        for (int i = 0; i < slots.size() - 1; i++) {
-            if (startTime >= slots[i] && endTime <= slots[i + 1]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    std::vector<std::string> getDoctorsBySpecialization(const std::string& specialization) {
-        std::vector<std::string> doctors;
-        for (const auto& entry : providerSpecialization) {
-            const std::vector<std::string>& specializations = entry.second;
-            if (std::find(specializations.begin(), specializations.end(), specialization) != specializations.end()) {
-                doctors.push_back(entry.first);
-            }
-        }
-        return doctors;
-    }
-
-    std::vector<int> getAvailableSlots(const std::string& providerName) {
-        if (providerSchedule.find(providerName) != providerSchedule.end()) {
-            return providerSchedule[providerName];
-        }
-        return {};
-    }
-};
-
-// Function to generate hourly time slots based on provider type
-std::vector<int> generateDoctorSpecificSlots(const std::string& specialization) {
-    std::vector<int> slots;
-
-    if (specialization == "ENT" || specialization == "Dermatologist") {
-        // Available hours for ENT, Dermatologists: 10:00 AM - 7:00 PM
-        slots.push_back(600);  // 10:00 AM
-        slots.push_back(1140); // 7:00 PM
-    } else if (specialization == "Urologist" || specialization == "Psychiatrist" || specialization == "Gynaecologist") {
-        // Available hours for Urologists, Psychiatrists, Gynaecologists: 12:00 PM - 5:00 PM
-        slots.push_back(720);  // 12:00 PM
-        slots.push_back(1020); // 5:00 PM
-    } else {
-        // Available hours for other doctors (Pediatricians, Dentists, General Physicians): 9:00 AM - 7:00 PM
-        slots.push_back(540);  // 9:00 AM
-        slots.push_back(1140); // 7:00 PM
-    }
-
-    return slots;
-}
-
 int main() {
-    ProviderAvailability providerAvailability;
     AVLNode* root = nullptr;
-
-    // Adjusting available slots for each doctor type
-    providerAvailability.addProvider("Dr. James", generateDoctorSpecificSlots("Pediatrician"), {"Pediatrician"});
-    providerAvailability.addProvider("Dr. Nadia", generateDoctorSpecificSlots("Pediatrician"), {"Pediatrician"});
-    providerAvailability.addProvider("Dr. Emily", generateDoctorSpecificSlots("General physician"), {"General physician"});
-    providerAvailability.addProvider("Dr. Kumar", generateDoctorSpecificSlots("Urologist"), {"Urologist"});
-    providerAvailability.addProvider("Dr. Sarah", generateDoctorSpecificSlots("Psychiatrist"), {"Psychiatrist"});
-    providerAvailability.addProvider("Dr. Smith", generateDoctorSpecificSlots("Psychiatrist"), {"Psychiatrist"});
-    providerAvailability.addProvider("Dr. Patel", generateDoctorSpecificSlots("Dentist"), {"Dentist"});
-    providerAvailability.addProvider("Dr. Sofia", generateDoctorSpecificSlots("Dentist"), {"Dentist"});
-    providerAvailability.addProvider("Dr. Ellen", generateDoctorSpecificSlots("Dermatologist"), {"Dermatologist"});
-    providerAvailability.addProvider("Dr. Olivia", generateDoctorSpecificSlots("ENT"), {"ENT"});
-    providerAvailability.addProvider("Dr. Abhay", generateDoctorSpecificSlots("ENT"), {"ENT"});
-    providerAvailability.addProvider("Dr. Jacob", generateDoctorSpecificSlots("General physician"), {"General physician"});
-    providerAvailability.addProvider("Dr. Riya", generateDoctorSpecificSlots("Gynaecologist"), {"Gynaecologist"});
-
     int choice;
+
     do {
         std::cout << "\nSelf-Scheduling Appointments \n";
         std::cout << "1. Book Appointment\n";
@@ -258,26 +194,11 @@ int main() {
             std::cin.ignore();
             std::getline(std::cin, name);
 
-            std::cout << "Enter Appointment Description: ";
-            std::cout << "(Dentist|Dermatologist|ENT|General Physician|Gynaecologist|Pediatrician|Psychiatrist|Urologist|Others): ";
-            std::getline(std::cin, description);
-
-            if (description == "Others") {
-                std::cout << "Contact the clinic to schedule an appointment.\n";
-                continue;
-            }
-
-            std::vector<std::string> doctors = providerAvailability.getDoctorsBySpecialization(description);
-            std::cout << "Available Doctors: \n";
-            for (const auto& doctor : doctors) {
-                std::cout << doctor << "\n";
-            }
-
-            std::cout << "Select preferred doctor: ";
+            std::cout << "Select preferred Doctor: ";
             std::getline(std::cin, providerName);
 
-            std::vector<int> availableSlots = providerAvailability.getAvailableSlots(providerName);
-            std::cout << "Available time slots for " << providerName << ": " << convertToTimeStr(availableSlots[0]) << " - " << convertToTimeStr(availableSlots[1]) << "\n";
+            std::cout << "Appointment Description: ";
+            std::getline(std::cin, description);
 
             std::cout << "Time(start): ";
             std::getline(std::cin, startTimeStr);
@@ -288,12 +209,18 @@ int main() {
             int startTime = convertToMinutes(startTimeStr);
             int endTime = convertToMinutes(endTimeStr);
 
-            if (providerAvailability.isAvailable(providerName, startTime, endTime)) {
-                Appointment app(startTime, endTime, name, providerName, description);
+            if (startTime < 600 || endTime > 1320 || startTime >= endTime) {
+                std::cout << "Not available. Please choose another time.\n";
+                continue;
+            }
+
+            Appointment app(startTime, endTime, name, providerName, description);
+
+            if (isConflict(root, app)) {
+                std::cout << "Not available. Please choose another time.\n";
+            } else {
                 root = insert(root, app);
                 std::cout << "Appointment placed successfully!\n";
-            } else {
-                std::cout << "The Doctor is not available during the requested time.\n";
             }
         } else if (choice == 2) {
             std::cout << "\nAppointments:\n";
