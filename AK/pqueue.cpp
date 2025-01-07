@@ -1,4 +1,4 @@
-/Patient Prioritization and Emergency Handling
+//Patient Prioritization and Emergency Handling
 #include <iostream>
 #include <queue>
 #include <string>
@@ -92,5 +92,4 @@ int main() {
     }
     std::cout << "Exiting program...\n";
     return 0;
-}
 }
