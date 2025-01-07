@@ -1,12 +1,11 @@
+// Self-Scheduling Appointments
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-
-// Self-Scheduling Appointments
-
 // Helper function to convert 12-hour time format (AM/PM) to minutes
 int convertToMinutes(const std::string& timeStr) {
     int hours, minutes;
